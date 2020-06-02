@@ -44,6 +44,13 @@
                     <!--                    <p>:</p>-->
                 </b-col>
                 <b-col cols="8" col md="5" lg="4" sm="7">
+                    <div v-if="!gambar">
+                        <input type="file" @change="onFileChange">
+                    </div>
+                    <div v-else>
+                        <img :src="gambar" width="120" height="100" />
+                        <button @click="removeImage">Remove image</button>
+                    </div>
                     <b-form-file
                             @change="onFileChange"
                             id="input-foto"
