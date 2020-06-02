@@ -45,12 +45,14 @@
                 </b-col>
                 <b-col cols="8" col md="5" lg="4" sm="7">
                     <b-form-file
+                            @change="onFileChange"
                             id="input-foto"
-                            v-model="gambarPenginapan"
+                            v-model="gambar"
                             required
                             placeholder="Pilih Foto Penginapan"
                             drop-placeholder="Pilih Foto"
                     ></b-form-file>
+                    <img v-if="gambar" :src="gambar" width="120" height="100" />
                 </b-col>
             </b-form-row>
 
@@ -126,6 +128,7 @@
                 gambarPenginapan: "",
                 hargaPenginapan: "",
                 jumlahKamar: "",
+                gambar:''
 
             }
 
@@ -153,10 +156,36 @@
                     .then(function () {
                         console.log("telah ke sini")
                     })
-                    .catch(function (err) {
-                        currentObj.output = err;
-                    });
             },
+            onFileChange(e) {
+                var files = e.target.files || e.dataTransfer.files;
+                console.log(e.target.files)
+                if (!files.length)
+                    return;
+                this.createImage(files[0]);
+            },
+            createImage(file) {
+                // eslint-disable-next-line no-unused-vars
+                var image = new Image();
+                var reader = new FileReader();
+                var vm = this;
+                reader.onload = (e) => {
+                    vm.image = e.target.result;
+                    console.log(e.target.result)
+                    axios.post('https://portal-desa.herokuapp.com/produk/add/gambar', {
+                        gambar : reader.result,
+                        nama : localStorage.getItem('sku')
+                    }).then(
+                        alert("Add Desa Pict success")
+                        // this.$router.push({name: 'daftarAdmin'})
+                    )
+                };
+                reader.readAsDataURL(file);
+
+            },
+            removeImage: function () {
+                this.image = '';
+            }
         }
     }
 </script>
