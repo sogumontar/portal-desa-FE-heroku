@@ -5,13 +5,16 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "start": "node server.js"
   },
   "dependencies": {
     "axios": "^0.19.2",
     "bootstrap-vue": "^2.9.0",
     "core-js": "^3.6.4",
+    "express": "^4.17.1",
     "numeral": "^2.0.6",
+    "serve-static": "^1.14.1",
     "vue": "^2.6.11",
     "vue-file-base64": "^1.0.2",
     "vue-filter-number-format": "^3.0.1",
