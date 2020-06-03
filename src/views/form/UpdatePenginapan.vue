@@ -1,6 +1,6 @@
 <template>
     <b-container class="mb-5">
-        <h1>Create Produk</h1>
+        <h1>Update Produk</h1>
         <b-form @submit="formSubmit" class="mt-3">
             <b-form-row class="justify-content-sm-center">
                 <b-col cols="3" col md="2" sm="2" lg="1" class="mt-2">
@@ -18,7 +18,42 @@
                     ></b-form-input>
                 </b-col>
             </b-form-row>
-
+            <b-form @submit="formSubmit" class="mt-3">
+                <b-form-row class="justify-content-sm-center">
+                    <b-col cols="3" col md="2" sm="2" lg="1" class="mt-2">
+                        <p>Lokasi</p>
+                    </b-col>
+                    <b-col cols="auto" col md="auto" lg="auto" sm="auto" class="mt-2">
+                        <p>:</p>
+                    </b-col>
+                    <b-col cols="8" col md="5" lg="4" sm="7">
+                        <b-form-input
+                                id="input-nama"
+                                v-model="lokasi"
+                                required
+                                type="text"
+                        ></b-form-input>
+                    </b-col>
+                </b-form-row>
+            </b-form>
+            <b-form @submit="formSubmit" class="mt-3">
+                <b-form-row class="justify-content-sm-center">
+                    <b-col cols="3" col md="2" sm="2" lg="1" class="mt-2">
+                        <p>Jumlah Kamar</p>
+                    </b-col>
+                    <b-col cols="auto" col md="auto" lg="auto" sm="auto" class="mt-2">
+                        <p>:</p>
+                    </b-col>
+                    <b-col cols="8" col md="5" lg="4" sm="7">
+                        <b-form-input
+                                id="input-nama"
+                                v-model="jumlahKamar"
+                                required
+                                type="text"
+                        ></b-form-input>
+                    </b-col>
+                </b-form-row>
+            </b-form>
             <b-form-row class="justify-content-sm-center mt-3">
                 <b-col cols="3" col md="2" sm="2" lg="1" class="mt-2">
                     <p>Harga</p>
@@ -67,8 +102,8 @@
                             <input type="file" @change="onFileChange">
                         </div>
                         <div v-else>
-                            <img :src="gambar" width="120" height="100"/>
-                            <button @click="removeImage">Remove image</button>
+                            <img :src="'https://portal-desa.herokuapp.com'+gambar" width="120" height="100" />
+                            <input type="file" @change="onFileChange">
                         </div>
                     </div>
                 </b-col>
@@ -82,33 +117,48 @@
 
                 </b-col>
                 <b-col col md="auto" lg="auto" class="mt-3">
-                    <button type="submit" id="tombol-daftar" class="pl-3 pr-3 btn btn-primary">Simpan</button>
+                    <button type="submit" id="tombol-daftar" class="pl-3 pr-3 btn btn-primary">Ubah</button>
                 </b-col>
             </b-form-row>
         </b-form>
+
     </b-container>
 </template>
 
 <script>
-
     import axios from "axios";
 
     export default {
+        name: "UpdateProduk",
         mounted() {
-            console.log('Component mounted.')
+            this.load()
         },
-        data() {
-            return {
+        data(){
+            return{
+                sku: this.$route.params.sku,
+                detail : '',
                 nama: '',
                 harga: '',
                 deskripsi: '',
                 gambar: '',
-                selectedFile: null,
-            };
+                lokasi:'',
+                jumlahKamar:'',
+                selectedFile : null,
+            }
         },
         methods: {
-            uploadImage(event) {
-                this.selectedFile = event.target.files[0].name
+            async load() {
+                const response = await axios.get('https://portal-desa.herokuapp.com/penginapan/' + this.$route.params.sku)
+                this.detail = response.data
+                console.log(this.detail)
+                this.nama =this.detail.nama
+                this.deskripsi =this.detail.deskripsi
+                this.harga =this.detail.harga
+                this.gambar =this.detail.gambar
+                this.lokasi =this.detail.lokasi
+                this.jumlahKamar =this.detail.jumlahKamar
+
+                console.log(this.detail)
             },
             async formSubmit(e) {
                 console.log(this.nama)
@@ -116,19 +166,21 @@
                 console.log(this.deskripsi)
                 e.preventDefault();
                 let currentObj = this;
-                axios.post('https://portal-desa.herokuapp.com/produk/add', {
+                axios.put('https://portal-desa.herokuapp.com/penginapan/update/' + this.$route.params.sku, {
                     nama: this.nama,
                     harga: this.harga,
                     deskripsi: this.deskripsi,
-                    skuDesa: localStorage.getItem("sku")
+                    jumlahKamar: this.jumlahKamar,
+                    lokasi: this.lokasi,
+                    skuMerchant: localStorage.getItem("sku")
                 }, error => {
                     console.error(error);
                 })
                     // eslint-disable-next-line no-unused-vars
                     .then(function (response) {
 
-                        alert("Tambah Produk Sukses"),
-                            window.location.href = "/produk"
+                        alert("Update Sukses"),
+                            window.location.href = "/penginapan"
                         // this.$router.go('ProductPage')
                     })
                     .then(function () {
@@ -156,11 +208,11 @@
                 reader.onload = (e) => {
                     vm.image = e.target.result;
                     console.log(e.target.result)
-                    axios.post('https://portal-desa.herokuapp.com/produk/add/gambar', {
+                    axios.post('https://portal-desa.herokuapp.com/penginapan/penginapan/update/gambar', {
                         gambar: reader.result,
-                        nama: localStorage.getItem('sku')
+                        nama: this.detail.gambar
                     }).then(
-                        alert("Add Desa Pict success")
+                        alert("Add gambar success")
                         // this.$router.push({name: 'daftarAdmin'})
                     )
                 };

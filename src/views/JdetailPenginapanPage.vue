@@ -2,9 +2,9 @@
     <b-container>
         <h1 class="judul mt-3">Detail Penginapan</h1>
         <hr>
-        <b-row  v-for="populer in populer" v-bind:key="populer.nama" class="mt-5 margin-kiri">
+        <b-row class="mt-5 margin-kiri">
             <b-col cols="12" col lg="5" md="6" sm="12">
-                <b-img :src="populer.foto" class="gambar-populer"></b-img>
+                <b-img :src="'https://portal-desa.herokuapp.com'+data.gambar" class="gambar-populer"></b-img>
             </b-col>
             <b-col col lg="6" cols="12" class="keterangan-populer">
                 <b-row>
@@ -15,7 +15,7 @@
                         <h5>:</h5>
                     </b-col>
                     <b-col cols="auto" col lg="auto">
-                        <h5>{{ populer.nama }}</h5>
+                        <h5>{{ data.nama }}</h5>
                     </b-col>
                 </b-row>
 
@@ -27,7 +27,7 @@
                         <h5>:</h5>
                     </b-col>
                     <b-col cols="auto" col lg="auto">
-                        <h5>Rp. {{ populer.harga | numFormat }} / hari</h5>
+                        <h5>Rp. {{ data.harga | numFormat }} / hari</h5>
                     </b-col>
                 </b-row>
 
@@ -39,7 +39,7 @@
                         <h5>:</h5>
                     </b-col>
                     <b-col cols="auto" col lg="auto">
-                        <h5>{{ populer.alamat }}</h5>
+                        <h5>{{ data.lokasi }}</h5>
                     </b-col>
                 </b-row>
 
@@ -51,131 +51,120 @@
                         <h5>:</h5>
                     </b-col>
                     <b-col cols="auto" col lg="auto">
-                        <h5>{{ populer.kamarTersedia}} / {{ populer.jumlahKamar }} Kamar</h5>
+                        <h5>{{ data.jumlahKamar }} Kamar</h5>
                     </b-col>
                 </b-row>
             </b-col>
-        </b-row>
-        <b-row class="margin-kiri margin-atas">
-            <b-col >
-                <h4 >Deskripsi</h4>
-            </b-col>
-        </b-row>
-        <b-row v-for="populer in populer" v-bind:key="populer.nama" class="margin-kiri">
+            <b-row class="margin-kiri margin-atas">
+                <b-col>
+                    <h4>Deskripsi</h4>
+                </b-col>
+            </b-row>
             <b-col col lg="10">
-                <p style="text-align: justify">{{ populer.deskripsi }}</p>
+                <p style="text-align: justify">{{ data.deskripsi }}</p>
             </b-col>
+
+            <hr>
         </b-row>
+        <div v-if="role === 'ROLE_MERCHANT' ">
 
-        <hr>
+            <div v-if=" data.skuMerchant === sku">
+                <b-btn variant="danger" @click="hapus">Hapus</b-btn>&nbsp;&nbsp;&nbsp;
+                <b-btn variant="primary"><router-link :to="'/updatePenginapan/'+this.$route.params.sku">Update</router-link></b-btn>
+            </div>
 
-        <b-form @submit="pesanPenginapan" class="mt-5">
-            <b-form-row class="justify-content-sm-center">
-                <b-col cols="3" col md="2" sm="2" lg="2" class="mt-2">
-                    <p>Masuk</p>
-                </b-col>
-                <b-col cols="auto" col md="auto" lg="auto" sm="auto" class="mt-2">
-                    <p>:</p>
-                </b-col>
-                <b-col cols="8" col md="5" lg="4" sm="7">
-                    <b-form-datepicker
-                            id="tanggal-masuk"
-                            v-model="dataMenginap.masuk"
-                            required
-                            placeholder="Pilih tanggal masuk"
-                    ></b-form-datepicker>
-                </b-col>
-            </b-form-row>
+        </div>
+        <div v-else>
+            <b-form @submit="pesanPenginapan" class="mt-5">
+                <b-form-row class="justify-content-sm-center">
+                    <b-col cols="3" col md="2" sm="2" lg="2" class="mt-2">
+                        <p>Tanggal Check-in</p>
+                    </b-col>
+                    <b-col cols="auto" col md="auto" lg="auto" sm="auto" class="mt-2">
+                        <p>:</p>
+                    </b-col>
+                    <b-col cols="8" col md="5" lg="4" sm="7">
+                        <b-form-datepicker
+                                id="tanggal-masuk"
+                                v-model="dataMenginap.masuk"
+                                required
+                                placeholder="Pilih tanggal masuk"
+                        ></b-form-datepicker>
+                    </b-col>
+                </b-form-row>
 
-            <b-form-row class="justify-content-sm-center mt-3">
-                <b-col cols="3" col md="2" sm="2" lg="2" class="mt-2">
-                    <p>Keluar</p>
-                </b-col>
-                <b-col cols="auto" col md="auto" lg="auto" sm="auto" class="mt-2">
-                    <p>:</p>
-                </b-col>
-                <b-col cols="8" col md="5" lg="4" sm="7">
-                    <b-form-datepicker
-                            id="tanggal-keluar"
-                            v-model="dataMenginap.keluar"
-                            required
-                            placeholder="Pilih tanggal keluar"
-                    ></b-form-datepicker>
-                </b-col>
-            </b-form-row>
 
-            <b-form-row class="justify-content-sm-center mt-3">
-                <b-col cols="3" col md="2" sm="2" lg="2" class="mt-2">
-                    <p>Jumlah Orang</p>
-                </b-col>
-                <b-col cols="auto" col md="auto" lg="auto" sm="auto" class="mt-2">
-                    <p>:</p>
-                </b-col>
-                <b-col cols="8" col md="5" lg="4" sm="7">
-                    <b-form-input
-                            id="jumlah-orang"
-                            v-model="dataMenginap.jumlahOrang"
-                            required
-                            type="number"
-                    ></b-form-input>
-                </b-col>
-            </b-form-row>
+                <b-form-row class="justify-content-sm-center mt-3">
+                    <b-col cols="3" col md="2" sm="2" lg="2" class="mt-2">
+                        <p>Lama Menginap</p>
+                    </b-col>
+                    <b-col cols="auto" col md="auto" lg="auto" sm="auto" class="mt-2">
+                        <p>:</p>
+                    </b-col>
+                    <b-col cols="8" col md="5" lg="4" sm="7">
+                        <b-form-input
+                                id="jumlah-orang"
+                                v-model="dataMenginap.jumlahOrang"
+                                required
+                                type="number"
+                        ></b-form-input>
+                    </b-col>
+                </b-form-row>
 
-            <b-form-row class="justify-content-sm-center mt-3">
-                <b-col cols="3" col md="2" sm="2" lg="2" class="mt-2">
-                    <p>Jumlah Kamar</p>
-                </b-col>
-                <b-col cols="auto" col md="auto" lg="auto" sm="auto" class="mt-2">
-                    <p>:</p>
-                </b-col>
-                <b-col cols="8" col md="5" lg="4" sm="7">
-                    <b-form-input
-                            id="jumlah-kamar"
-                            v-model="dataMenginap.jumlahKamar"
-                            required
-                            type="number"
-                    ></b-form-input>
-                </b-col>
-            </b-form-row>
-            <b-form-row class="justify-content-sm-center mt-3 mb-5">
-                <b-button type="submit" variant="primary" v-if="authenticated">Pesan Penginapan</b-button>
-                <router-link to="/login" v-else class="btn btn-primary">Login</router-link>
-                <br>
+                <b-form-row class="justify-content-sm-center mt-3">
+                    <b-col cols="3" col md="2" sm="2" lg="2" class="mt-2">
+                        <p>Metode Pembayaran</p>
+                    </b-col>
+                    <b-col cols="auto" col md="auto" lg="auto" sm="auto" class="mt-2">
+                        <p>:</p>
+                    </b-col>
+                    <b-col cols="8" col md="5" lg="4" sm="7">
+                        <section>
+                            <input type="radio" v-model="metode" value="ATM Mandiri">Atm Mandiri
+                            <input type="radio" v-model="metode" value="Atm BRI">Atm BRI
+                            <br/>
+                            <span>value: {{metode}}</span>
+                            <div v-if="metode === 'Atm BRI' ">
+                                <img src="./../assets/pict/atm.png" alt="">
+                            </div>
+                            <div v-else-if="metode === 'ATM Mandiri' ">
+                                <img src="./../assets/pict/mandiri.png" alt="">
+                            </div>
+                        </section>
 
-            </b-form-row>
+                    </b-col>
+                </b-form-row>
+                <b-form-row class="justify-content-sm-center mt-3 mb-5">
+                    <b-button type="submit" variant="primary" v-if="authenticated">Pesan Penginapan</b-button>
+                    <router-link to="/login" v-else class="btn btn-primary">Login</router-link>
+                    <br>
 
-        </b-form>
+                </b-form-row>
+
+            </b-form>
+        </div>
     </b-container>
 </template>
 
 <script>
+    import axios from 'axios'
+
     export default {
         name: "JdetailPenginapanPage",
-        data(){
-            var val=false;
-            if(localStorage.getItem('token')){
-                val=true
+        mounted() {
+            this.load()
+        },
+        data() {
+            var val = false;
+            if (localStorage.getItem('token')) {
+                val = true
             }
-            return{
-                populer : [
-                    {
-                        'nama' : 'Penginapan 1',
-                        'alamat' : 'Balige, Toba, Sumatera Utara',
-                        'foto' : 'https://s1.bukalapak.com/uploads/content_attachment/13aa121810e8d76210ec1fb5/w-744/penginapan_murah_di_batu_malang.jpg',
-                        'deskripsi' : 'Penginapan ini sangat bagus, pemandangan yang ada disini sangat indah, udaranya juga sangat segar karena banyak' +
-                            'pepohonan yang lebat. Alam disini masih alami dan belom ada dirusak manusia. Lorem ipsum dolor sit amet, consectetur adipiscing ' +
-                            'elit. Phasellus commodo accumsan velit sed fermentum. Maecenas vehicula tellus sed orci fringilla congue. Morbi eu pretium neque. ' +
-                            'Proin feugiat nibh orci, eu convallis velit ultrices non. Pellentesque tempus consectetur porttitor. Vivamus consequat varius ' +
-                            'ex a pellentesque. Aenean pulvinar orci a mauris consectetur euismod. Ut semper, lectus eget feugiat porta, turpis dui consectetur ' +
-                            'orci, eu porttitor felis libero eu arcu. Suspendisse potenti. Nullam imperdiet orci ac mauris lobortis viverra. In libero est, ' +
-                            'aliquam at elementum ultricies, mollis ut sapien. Fusce varius, orci sit amet sollicitudin luctus, tortor diam tincidunt nisl, ' +
-                            'nec sodales nulla purus vel mauris. Nulla eu nisl et turpis ultricies placerat. Aliquam eget augue eu enim lobortis vehicula. ' +
-                            'Quisque a blandit diam. Sed eu vehicula augue, id tincidunt augue.',
-                        'harga' : 500000,
-                        'jumlahKamar' : 20,
-                        'kamarTersedia' : 20,
-                    }
-                ],
+            return {
+                populer: [],
+                data: [],
+                role: localStorage.getItem("role"),
+                sku: localStorage.getItem("sku"),
+                metode: '',
                 dataMenginap: {
                     masuk: "",
                     keluar: "",
@@ -186,30 +175,44 @@
             }
         },
         methods: {
-            pesanPenginapan(){
+            pesanPenginapan() {
 
+            },
+            async load() {
+                const response = await axios.get('https://portal-desa.herokuapp.com/penginapan/' + this.$route.params.sku)
+                this.data = response.data
+                console.log(this.data)
+                console.log(this.data.sku)
+            },
+            async hapus(){
+                await axios.put('https://portal-desa.herokuapp.com/penginapan/delete/' + this.$route.params.sku)
+                .then(alert("Hapus Penginapan Sukses"), window.location.href="/penginapan")
             }
+
         }
     }
 </script>
 
 <style scoped>
-    .judul{
+    .judul {
         text-align: left;
         font-family: "Arial Black";
     }
 
     @media only screen and (max-width: 600px) {
-        .gambar-populer{
+        .gambar-populer {
             width: 400px;
         }
-        .keterangan-populer{
+
+        .keterangan-populer {
             margin-top: 20px;
         }
-        .margin-kiri{
+
+        .margin-kiri {
             margin-left: 15px;
         }
-        .margin-atas{
+
+        .margin-atas {
             margin-top: 20px;
         }
 
@@ -217,16 +220,19 @@
 
     /* Small devices (portrait tablets and large phones, 600px and up) */
     @media only screen and (min-width: 600px) {
-        .gambar-populer{
+        .gambar-populer {
             width: 400px;
         }
-        .keterangan-populer{
+
+        .keterangan-populer {
             margin-top: 20px;
         }
-        .margin-kiri{
+
+        .margin-kiri {
             margin-left: 15px;
         }
-        .margin-atas{
+
+        .margin-atas {
             margin-top: 20px;
         }
     }

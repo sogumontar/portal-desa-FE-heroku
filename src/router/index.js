@@ -28,7 +28,7 @@ import ArtikelPage from "../views/ArtikelPage";
 import BeritaPage from "../views/BeritaPage";
 import PengumumanPage from "../views/PengumumanPage";
 import UpdateProduk from "../views/form/UpdateProduk";
-
+import UpdatePenginapan from "../views/form/UpdatePenginapan";
 
 Vue.use(VueRouter);
 
@@ -37,6 +37,11 @@ const routes = [
     path: "/",
     name: "Home",
     component: JhomePage
+  },
+  {
+    path: "/updatePenginapan/:sku",
+    name: "UpdatePenginapan",
+    component: UpdatePenginapan
   },
   {
     path: "/updateProduk/:sku",
@@ -168,7 +173,7 @@ const routes = [
     component: JformTambahPenginapan
   },
   {
-    path: "/penginapan/detail",
+    path: "/penginapan/detail/:sku",
     name: "JdetailPenginapanPage",
     component: JdetailPenginapanPage
   },
