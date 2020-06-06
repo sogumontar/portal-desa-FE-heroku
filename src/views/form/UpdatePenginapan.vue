@@ -180,7 +180,7 @@
                     .then(function (response) {
 
                         alert("Update Sukses"),
-                            window.location.href = "/penginapan"
+                            window.location.href = "/merchantPenginapan"
                         // this.$router.go('ProductPage')
                     })
                     .then(function () {

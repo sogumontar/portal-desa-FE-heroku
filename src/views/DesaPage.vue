@@ -9,7 +9,7 @@
                     <router-link  :to="'/detailKecamatan/'+kecamatan.nama"><h5>{{kecamatan.nama}}</h5></router-link>
                     <b-img rounded=""
                            :src="'https://portal-desa.herokuapp.com/kecamatan/get/'+kecamatan.nama+'.jpg'"
-                           width="300px"></b-img>
+                           width="300px" style="height: 200px"></b-img>
                 </b-col>
             </b-row>
         </div>

@@ -30,8 +30,8 @@
                             <p>Harga : {{data.harga | numFormat}}</p>
                             <div v-if="tab === 2 && data.status === 3">
                                 <img
-                                     width="350px"
-                                     :src="'https://portal-desa.herokuapp.com/transaksi/get/'+data.resi" alt="">
+                                        width="350px"
+                                        :src="'https://portal-desa.herokuapp.com/transaksi/get/'+data.resi" alt="">
 
                                 <b-btn variant="danger" v-if="tab === 2" @click="tolakProduk(data.id)">Tolak</b-btn>&nbsp;&nbsp;&nbsp;&nbsp;
                                 <b-btn variant="success" v-if="tab === 2" @click="terimaProduk(data.id)">Terima</b-btn>
@@ -51,11 +51,11 @@
                             <p>Harga : Rp. {{data[0].harga | numFormat}}</p>
                             <div v-if="tab === 4 && data.status === 2">
                                 <img
-                                     width="500px"
-                                     :src="'https://portal-desa.herokuapp.com/transaksi/get/'+data[0].resi" alt="">
+                                        width="500px"
+                                        :src="'https://portal-desa.herokuapp.com/transaksi/get/'+data[0].resi" alt="">
 
-                                <b-btn variant="danger"  @click="tolakPenginapan(data[0].id)">Tolak</b-btn>&nbsp;&nbsp;&nbsp;&nbsp;
-                                <b-btn variant="success"  @click="terimaPenginapan(data[0].id)">Terima</b-btn>
+                                <b-btn variant="danger" @click="tolakPenginapan(data[0].id)">Tolak</b-btn>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <b-btn variant="success" @click="terimaPenginapan(data[0].id)">Terima</b-btn>
                             </div>
                         </div>
                     </b-card-text>
@@ -113,7 +113,8 @@
                 resi: '',
                 image: '',
                 selected: '',
-                namaLogin: ''
+                namaLogin: '',
+                role: localStorage.getItem('role')
             }
         }, async mounted() {
             this.sku = localStorage.getItem('sku')
@@ -152,49 +153,72 @@
             },
             async tab1() {
                 this.tab = 1
-                const response = await axios.get('https://portal-desa.herokuapp.com/transaksi/pesanan')
-                this.data = response.data
-                console.log(this.data)
+                if (this.role === "ROLE_ADMIN") {
+                    const response = await axios.get('https://portal-desa.herokuapp.com/transaksi/pesanan')
+                    this.data = response.data
+                    console.log(this.data)
+                }else{
+                    const response = await axios.get('https://portal-desa.herokuapp.com/transaksi/sku/pesan/'+this.sku)
+                    this.data = response.data
+                    console.log(this.data)
+                }
             },
             async tab2() {
                 this.tab = 2
-                const response = await axios.get('https://portal-desa.herokuapp.com/transaksi/pesanan/sudah')
-                this.data = response.data
-                console.log(this.data)
+                if (this.role === "ROLE_ADMIN") {
+                    const response = await axios.get('https://portal-desa.herokuapp.com/transaksi/pesanan/sudah')
+                    this.data = response.data
+                    console.log(this.data)
+                }else{
+                    const response = await axios.get('https://portal-desa.herokuapp.com/transaksi/sku/bayar/'+this.sku)
+                    this.data = response.data
+                    console.log(this.data)
+                }
             },
             async tab3() {
                 this.tab = 3
-                const response = await axios.get('https://portal-desa.herokuapp.com/transaksiPenginapan/web/pesanan')
-                this.data = response.data
+                if (this.role === "ROLE_ADMIN") {
+                    const response = await axios.get('https://portal-desa.herokuapp.com/transaksiPenginapan/web/pesanan')
+                    this.data = response.data
+                }else{
+                    const response = await axios.get('https://portal-desa.herokuapp.com/transaksiPenginapan/web/sku/pesan/'+this.sku)
+                    this.data = response.data
+                }
             },
             async tab4() {
                 this.tab = 4
-                const response = await axios.get('https://portal-desa.herokuapp.com/transaksiPenginapan/web/pesanan/sudah')
-                this.data = response.data
-                console.log(this.data)
+                if (this.role === "ROLE_ADMIN") {
+                    const response = await axios.get('https://portal-desa.herokuapp.com/transaksiPenginapan/web/pesanan/sudah')
+                    this.data = response.data
+                    console.log(this.data)
+                }else{
+                    const response = await axios.get('https://portal-desa.herokuapp.com/transaksiPenginapan/web/sku/bayar/'+this.sku)
+                    this.data = response.data
+                    console.log(this.data)
+                }
             },
             formSubmit() {
             },
-            async terimaProduk(sku){
-                await axios.get('https://portal-desa.herokuapp.com/transaksi/terima/'+sku)
+            async terimaProduk(sku) {
+                await axios.get('https://portal-desa.herokuapp.com/transaksi/terima/' + sku)
                     .then(alert("Terima Pesanan Produk Sukses")),
-                    window.location.href="/admin"
+                    window.location.href = "/admin"
             },
-            async tolakProduk(sku){
-                await axios.get('https://portal-desa.herokuapp.com/transaksi/tolak/'+sku)
+            async tolakProduk(sku) {
+                await axios.get('https://portal-desa.herokuapp.com/transaksi/tolak/' + sku)
                     .then(alert("Tolak Pesanan Produk Sukses")),
-                    window.location.href="/admin"
+                    window.location.href = "/admin"
             },
-            async terimaPenginapan(sku){
-                await axios.get('https://portal-desa.herokuapp.com/transaksiPenginapan/terima/'+sku)
+            async terimaPenginapan(sku) {
+                await axios.get('https://portal-desa.herokuapp.com/transaksiPenginapan/terima/' + sku)
                     .then(alert("Terima Pesanan Penginapan Sukses"),
-                        window.location.href="/admin"
+                        window.location.href = "/admin"
                     )
             },
-            async tolakPenginapan(sku){
-                await axios.get('https://portal-desa.herokuapp.com/transaksiPenginapan/tolak/'+sku)
+            async tolakPenginapan(sku) {
+                await axios.get('https://portal-desa.herokuapp.com/transaksiPenginapan/tolak/' + sku)
                     .then(alert("Tolak Pesanan Penginapan Sukses")),
-                    window.location.href="/admin"
+                    window.location.href = "/admin"
             }
         }
     }

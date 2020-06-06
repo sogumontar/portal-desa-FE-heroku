@@ -2,22 +2,16 @@
     <b-container class="mt-4">
         <h1 class="judul mt-3">Penginapan</h1>
         <hr>
-        <b-row class="container">
+        <b-row>
             <b-col>
-                <b-btn  v-if="merchant" @click="check" class="btn btn-primary">Tambah Penginapan</b-btn>
-
+                <b-btn v-if="merchant" @click="check" class="btn btn-primary">Tambah Penginapan</b-btn>
                 <!--                <b-button variant="primary"><b-icon-plus></b-icon-plus> Tambah Penginapan</b-button>-->
             </b-col>
         </b-row>
-        <br><br>
-        <div class="search-wrapper panel-heading col-sm-12">
-            <input class="form-control" type="text" v-model="searchQuery" placeholder="Search"/>
-        </div>
-
         <div right v-if="penginapan.length!==0">
             <b-row class="">
                 <b-col cols="12" col lg="4" sm="12" md="6" class="p-4"
-                       v-for="penginapan in filteredResources.slice(batasbawah, batasatas)" :key="penginapan.sku">
+                       v-for="penginapan in penginapan.slice(batasbawah, batasatas)" :key="penginapan.sku">
                     <router-link :to="'/penginapan/detail/'+penginapan.sku">
                         <h5 style="color: black; text-decoration: none">{{penginapan.nama}}</h5>
                         <b-img rounded=""
@@ -29,7 +23,7 @@
         </div>
 
         <div v-else>
-            <center><img alt="Vue logo" src="../assets/gif/25.gif" width="90px"></center>
+            <center><img alt="Vue logo" src="../.././assets/gif/25.gif" width="90px"></center>
         </div>
 
         <b-row>
@@ -93,7 +87,7 @@
     import axios from 'axios'
 
     export default {
-        name: "JpenginapanPage",
+        name: "MerchantPenginapan",
         mounted() {
             this.load()
         },
@@ -108,7 +102,6 @@
             }
             return {
                 penginapan: [],
-                searchQuery: '',
                 populer: [
                     {
                         'nama': 'Penginapan 1',
@@ -130,28 +123,15 @@
                 batasatas: 6,
                 test: 1,
                 merchant: check,
-                detail :''
-            }
-        },
-        computed: {
-            filteredResources() {
-                if (this.searchQuery) {
-                    return this.penginapan.filter((penginapan) => {
-                        return this.searchQuery.toLowerCase().split(' ').every(v => penginapan.nama.toLowerCase().includes(v))
-                        // return item.nama.startsWith(this.searchQuery);
-                    })
-                } else {
-                    return this.penginapan;
-                }
+                skuLogin: localStorage.getItem('sku'),
+                detail: ''
             }
         },
         methods: {
             async load() {
-                const response = await axios.get('https://portal-desa.herokuapp.com/penginapan/')
+                const response = await axios.get('https://portal-desa.herokuapp.com/penginapan/bySkuAdmin/' + this.skuLogin)
                 this.penginapan = response.data
                 console.log(this.penginapan)
-
-
                 const responses = await axios.get('https://portal-desa.herokuapp.com/desa/desa/skuAdmin/' + localStorage.getItem("sku"))
                 this.detail = responses.data
             },
@@ -189,8 +169,8 @@
                     this.$router.push('/penginapan/create')
                 } else {
                     alert("anda harus mengisi detail data desa terlebih dahulu")
-                    this.$router.push({path: '/updateDesa/'+localStorage.getItem('sku')})
-                    window.location.href="/updateDesa/"+localStorage.getItem('sku')
+                    this.$router.push({path: '/updateDesa/' + localStorage.getItem('sku')})
+                    window.location.href = "/updateDesa/" + localStorage.getItem('sku')
                 }
             }
         }

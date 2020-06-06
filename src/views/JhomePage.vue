@@ -2,6 +2,14 @@
     <b-container class="mt-4">
         <b-row>
             <b-col>
+                <input class="form-control" type="text" v-model="searchQuery" placeholder="Search" />
+            </b-col>
+            <b-col>
+                <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
+            </b-col>
+        </b-row>
+        <b-row>
+            <b-col>
                 <p id="judul">Selamat datang di Aplikasi Portal Desa.</p>
                 <p>Aplikasi dari Kabupaten Toba yang menyediakan informasi setiap
                     desa yang terdapat di Kabupaten Toba</p>
@@ -10,11 +18,11 @@
         <hr>
         <div v-if="kecamatan.length!=0">
             <b-row class="">
-                    <b-col cols="12" col lg="4" sm="12" md="6" class="p-4" v-for="kecamatan in kecamatan.slice(batasbawah, batasatas)" :key="kecamatan.sku">
-                        <router-link  :to="'/detailKecamatan/'+kecamatan.nama"><h5>{{kecamatan.nama}}</h5></router-link>
+                    <b-col cols="12" col lg="4" sm="12" md="6" class="p-4" v-for="item in filteredResources.slice(batasbawah, batasatas)" :key="item.sku">
+                        <router-link  :to="'/detailKecamatan/'+item.nama"><h5>{{item.nama}}</h5></router-link>
                         <b-img rounded=""
-                               :src="'https://portal-desa.herokuapp.com/kecamatan/get/'+kecamatan.nama+'.jpg'"
-                               fluid width="500px" height="500px"></b-img>
+                               :src="'https://portal-desa.herokuapp.com/kecamatan/get/'+item.nama+'.jpg'"
+                               width="300px" style="height: 200px"></b-img>
                     </b-col>
             </b-row>
         </div>
@@ -51,7 +59,7 @@
         </div>
 
         <hr>
-        <p id="judul-desa-populer" class="p-2">Produk Pospuler</p>
+        <p id="judul-desa-populer" class="p-2">Produk Populer</p>
         <b-row class="p-2 pb-4">
             <b-col cols="12" col lg="6" sm="12" md="6">
                 <b-img rounded=""
@@ -116,7 +124,8 @@
                 kecamatan: [],
                 test: 1,
                 val:1,
-                popular :[]
+                popular :[],
+                searchQuery:'',
             }
         },
         async mounted() {
@@ -170,10 +179,16 @@
             }
         },
         computed: {
-            rows() {
-                return this.kecamatan.length
+            filteredResources (){
+                if(this.searchQuery){
+                    return this.kecamatan.filter((item)=>{
+                        return this.searchQuery.toLowerCase().split(' ').every(v => item.nama.toLowerCase().includes(v))
+                        // return item.nama.startsWith(this.searchQuery);
+                    })
+                }else{
+                    return this.kecamatan;
+                }
             }
-
         }
     }
 

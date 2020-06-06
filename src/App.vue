@@ -9,18 +9,19 @@
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
             <b-collapse id="nav-collapse" is-nav>
-                <b-nav-form>
-                    <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
-                    <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
-                </b-nav-form>
+                <h1 style=" margin-top: 10px;" >Portal Desa</h1>
+<!--                <b-nav-form>-->
+<!--                    <b-form-input size="sm" class="mr-sm-2" v-model="search" placeholder="Search Desa"></b-form-input>-->
+<!--                    <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>-->
+<!--                </b-nav-form>-->
 
                 <b-navbar-nav class="ml-auto mt-1">
                     <b-navbar-nav class="mr-4">
                         <b-nav-item v-if="role!='ROLE_ADMIN'">
-                            <router-link to="/produk">Produk</router-link>
+                            <router-link to="/desa">Desa</router-link>
                         </b-nav-item>
                         <b-nav-item v-if="role!='ROLE_ADMIN'">
-                            <router-link to="/desa">Desa</router-link>
+                            <router-link to="/produk">Produk</router-link>
                         </b-nav-item>
                         <b-nav-item v-if="role!='ROLE_ADMIN'">
                             <router-link to="/penginapan">Penginapan</router-link>
@@ -54,12 +55,27 @@
                         </b-dropdown-item>
                     </b-nav-item-dropdown>
 
-                    <b-nav-item-dropdown v-else-if="authenticated" right class="">
+                    <b-nav-item-dropdown v-else-if="role === 'ROLE_MERCHANT'" right class="">
                         <b-dropdown-item>
-                            <router-link to="/">Profile</router-link>
+                            <router-link to="/profile">Profile</router-link>
                         </b-dropdown-item>
                         <b-dropdown-item>
-                            <router-link to="/">Pesanan</router-link>
+                            <router-link to="/MerchantProduk">Produk Saya</router-link>
+                        </b-dropdown-item>
+                        <b-dropdown-item>
+                            <router-link to="/MerchantPenginapan">Penginapan Saya</router-link>
+                        </b-dropdown-item>
+                        <b-dropdown-item><a v-on:click="logout" v-if="authenticated" href="/">Logout</a>
+                            <router-link v-else to="/login">Login</router-link>
+                        </b-dropdown-item>
+                    </b-nav-item-dropdown>
+
+                    <b-nav-item-dropdown v-else-if="authenticated" right class="">
+                        <b-dropdown-item>
+                            <router-link to="/profile">Profile</router-link>
+                        </b-dropdown-item>
+                        <b-dropdown-item>
+                            <router-link to="/admin">Pesanan</router-link>
                         </b-dropdown-item>
                         <b-dropdown-item><a v-on:click="logout" v-if="authenticated" href="/">Logout</a>
                             <router-link v-else to="/login">Login</router-link>
@@ -95,7 +111,8 @@
             }
             return {
                 authenticated: false,
-                role: ''
+                role: '',
+                search:''
             }
         },
         methods: {

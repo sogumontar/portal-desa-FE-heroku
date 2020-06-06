@@ -19,6 +19,8 @@
                         <p>Nama Produk : {{produk.nama}}</p>
                         <p>Harga : Rp. {{produk.harga | numFormat}}</p>
                         <p>Deskripsi : <br>{{produk.deskripsi}}</p>
+                        <p>Desa : <br>{{desa.nama}}</p>
+                        <p>Kecamatan : <br>{{desa.kec}}</p>
                     </b-col>
             </b-row>
             <div class="tombol" v-if="role === 'ROLE_MERCHANT'">
@@ -85,7 +87,8 @@
                 harga: 0,
                 skuCustomer: '',
                 role : localStorage.getItem('role'),
-                idProduk: ''
+                idProduk: '',
+                desa:[]
             }
         }, async mounted() {
             this.load()
@@ -100,6 +103,9 @@
                 const response = await axios.get('https://portal-desa.herokuapp.com/produk/sku/' + this.$route.params.sku)
                 this.produk = response.data
                 console.log(this.produk)
+                const responses = await axios.get('https://portal-desa.herokuapp.com/desa/desa/skuAdmin/' + this.produk.skuDesa)
+                this.desa = responses.data.data
+                console.log(this.desa)
             },
             tambah_jumlah(){
                 this.jumlah++;

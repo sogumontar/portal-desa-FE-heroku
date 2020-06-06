@@ -20,16 +20,16 @@
                 <b-row class="baris-produk justify-content-md-center justify-content-lg-center justify-content-sm-center">
                     <b-col class="metric-tarif p-4 m-3 mr-5" v-for="penginapan in penginapan" :key="penginapan.sku"
                            cols="10" col lg="3" sm="8" md="4">
-                        <router-link :to="'/detailPenginapan/'+produk.sku">
+                        <router-link :to="'/detailPenginapan/'+penginapan.sku">
                             <b-img
                                     rounded=""
-                                    :src="'https://portal-desa.herokuapp.com'+produk.gambar"
+                                    :src="'https://portal-desa.herokuapp.com'+penginapan.gambar"
                                     fluid
                                     class="gambar-produk"></b-img>
                         </router-link>
                         <hr>
-                        <h5>Nama: {{ produk.nama }}</h5>
-                        <h5>Harga: Rp. {{ produk.harga | numFormat }}</h5>
+                        <h5>Nama: {{ penginapan.nama }}</h5>
+                        <h5>Harga: Rp. {{ penginapan.harga | numFormat }}</h5>
                     </b-col>
                 </b-row>
             </div>

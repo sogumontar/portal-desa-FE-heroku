@@ -138,7 +138,7 @@
                     .then(function (response) {
 
                         alert("Update Sukses"),
-                            window.location.href = "/produk"
+                            window.location.href = "/merchantProduk"
                         // this.$router.go('ProductPage')
                     })
                     .then(function () {

@@ -54,13 +54,36 @@
                         <h5>{{ data.jumlahKamar }} Kamar</h5>
                     </b-col>
                 </b-row>
+                <b-row>
+                    <b-col cols="3" col lg="4">
+                        <h5>Desa</h5>
+                    </b-col>
+                    <b-col cols="auto" col lg="auto">
+                        <h5>:</h5>
+                    </b-col>
+                    <b-col cols="auto" col lg="auto">
+                        <h5>{{ data.desa }}</h5>
+                    </b-col>
+                </b-row>
+                <b-row>
+                    <b-col cols="3" col lg="4">
+                        <h5>Kecamatan</h5>
+                    </b-col>
+                    <b-col cols="auto" col lg="auto">
+                        <h5>:</h5>
+                    </b-col>
+                    <b-col cols="auto" col lg="auto">
+                        <h5>{{ data.kecamatan }}</h5>
+                    </b-col>
+                </b-row>
             </b-col>
             <b-row class="margin-kiri margin-atas">
                 <b-col>
-                    <h4>Deskripsi</h4>
+                    <h4>Deskripsi : </h4>
                 </b-col>
             </b-row>
             <b-col col lg="10">
+                <br><br>
                 <p style="text-align: justify">{{ data.deskripsi }}</p>
             </b-col>
 
@@ -74,7 +97,7 @@
             </div>
 
         </div>
-        <div v-else>
+        <div v-else-if="role === 'ROLE_USER'">
             <b-form @submit="pesanPenginapan" class="mt-5">
                 <b-form-row class="justify-content-sm-center">
                     <b-col cols="3" col md="2" sm="2" lg="2" class="mt-2">
@@ -165,6 +188,7 @@
                 role: localStorage.getItem("role"),
                 sku: localStorage.getItem("sku"),
                 metode: '',
+                desa:[],
                 dataMenginap: {
                     masuk: "",
                     keluar: "",
@@ -182,7 +206,9 @@
                 const response = await axios.get('https://portal-desa.herokuapp.com/penginapan/' + this.$route.params.sku)
                 this.data = response.data
                 console.log(this.data)
-                console.log(this.data.sku)
+                const responses =await axios.get('https://portal-desa.herokuapp.com/desa/desa/skuAdmin/' + this.data.skuDesa)
+                this.desa=responses.data
+                console.log(this.desa)
             },
             async hapus(){
                 await axios.put('https://portal-desa.herokuapp.com/penginapan/delete/' + this.$route.params.sku)

@@ -91,6 +91,7 @@
                     password : this.password
                 })
                     .then(function (response) {
+                        console.log(response)
                         var now = new Date().getTime();
                         currentObj.responses = response.data;
                         if(response.data.accessToken){
@@ -112,8 +113,7 @@
                     })
                     // eslint-disable-next-line no-unused-vars
                     .catch(function (response) {
-                        // alert("Username atau password salah")
-                        // alert(response)
+                        alert("Username atau password salah")
                         currentObj.responses = "Login Failed, Check your username/password";
                     });
             }
