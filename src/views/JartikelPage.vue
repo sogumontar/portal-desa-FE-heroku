@@ -28,6 +28,26 @@
                     <p v-if="tab === 1" >Artikel</p>
                     <p v-else-if="tab === 2">Berita</p>
                     <p v-else>Pengumuman</p>
+
+                </div>
+                <div class="card">
+                    <br><br><br><br>
+                    <b-card-text v-for="artikel in artikel" :key="artikel[0].id">
+                        <div>
+                            <p>Judul : {{artikel[0].judul}}</p>
+                            <div v-if="artikel[0].isi.length >50">
+                                <p>Isi : {{artikel[0].isi}}...</p>
+                            </div>
+                            <div v-else>
+                                <p>Isi : {{artikel[0].isi}}</p>
+                            </div>
+                            <p>Penulis : {{artikel[0].penulis}}</p>
+                            <p>Sumber : {{artikel[0].sumber}}</p>
+                            <p>Kecamatan : {{artikel[1].kecamatan}}</p>
+                            <p>Desa : {{artikel[1].nama}}</p>
+                            <b-btn variant="danger" @click="hapus(artikel[0].id)">Hapus</b-btn>
+                        </div>
+                    </b-card-text>
                 </div>
             </b-card>
         </b-container>
@@ -45,6 +65,8 @@
             return{
                 tab:1,
                 desa: [],
+                sku : '',
+                artikel :[]
             }
         },
         async mounted(){
@@ -54,24 +76,26 @@
             async load(){
                 const response = await axios.get('https://portal-desa.herokuapp.com/desa/' + this.$route.params.sku)
                 this.desa = response.data
+                this.sku = this.desa.skuAdmin
                 console.log(this.desa)
             },
             async tab1(){
                 this.tab=1
-                const response = await axios.get('https://portal-desa.herokuapp.com/transaksi/sku/cart/' + this.sku)
-                this.data=response.data
-                console.log(this.data)
+                const response = await axios.get('https://portal-desa.herokuapp.com/artikel/web/artikel' + this.sku)
+                this.artikel=response.data
+                console.log(this.artikel)
             },
             async tab2(){
                 this.tab=2
-                const response = await axios.get('https://portal-desa.herokuapp.com/transaksi/sku/pesan/' + this.sku)
-                this.data=response.data
-                console.log(this.data[0])
+                const response = await axios.get('https://portal-desa.herokuapp.com/artikel/web/berita' + this.sku)
+                this.artikel=response.data
+                console.log(this.artikel[0])
             },
             async tab3(){
                 this.tab=3
-                const response = await axios.get('https://portal-desa.herokuapp.com/transaksi/sku/bayar/' + this.sku)
-                this.data=response.data
+                const response = await axios.get('https://portal-desa.herokuapp.com/artikel/web/pengumuman'+this.sku)
+                this.artikel=response.data
+                console.log(this.artikel)
             },
         }
     }

@@ -34,6 +34,9 @@ import MerchantProduk from "../views/Merchant/MerchantProduk";
 import Search from "../views/Search";
 import ProfilePage from "../views/ProfilePage";
 import UpdateDetailDesaForm from "../views/form/UpdateDetailDesaForm";
+import GantiPasswordPage from "../views/form/GantiPasswordPage";
+import LupaPasswordPage from "../views/form/LupaPasswordPage";
+import VerifikasiCodePage from "../views/form/VerifikasiCodePage";
 
 
 Vue.use(VueRouter);
@@ -43,6 +46,21 @@ const routes = [
         path: "/",
         name: "Home",
         component: JhomePage
+    },
+    {
+        path: "/verifikasiCode",
+        name: "VerifikasiCode",
+        component: VerifikasiCodePage
+    },
+    {
+        path: "/lupaPassword",
+        name: "LupaPassword",
+        component: LupaPasswordPage
+    },
+    {
+        path: "/gantiPassword",
+        name: "GantiPassword",
+        component: GantiPasswordPage
     },
     {
         path: "/updateDesa/:sku",

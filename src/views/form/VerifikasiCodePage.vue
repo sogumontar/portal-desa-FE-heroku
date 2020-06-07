@@ -1,6 +1,6 @@
 <template>
     <b-container>
-        <h2 align="center" style="align-items: center" class="judul mt-3">Profile {{nama}}</h2>
+        <h2 align="center" style="align-items: center" class="judul mt-3">Kode Verifikasi</h2>
         <hr>
         <b-row>
             <b-col col lg="1">
@@ -13,89 +13,77 @@
 
                     <b-col class="keterangan p-4">
 
-                        <b-form-row class="justify-content-md-center" v-if="role === 'ROLE_MERCHANT'">
-                            <b-col col md="4" lg="4">
+                        <br><br>
+                        <b-row>
+                            <b-col col lg="2">
                             </b-col>
-                            <b-col col md="5" lg="5">
+                            <b-col col lg="3">
+                                <p>Username</p>
                             </b-col>
-                            <b-col col md="auto" lg="3" class="mt-3">
-                                <button type="submit"  class="pl-3 pr-3 btn btn-primary"><router-link :to="'updateDesa/'+profile.sku">Detail
-                                    Desa</router-link>
+                            <b-col col lg="auto">
+                                <p>:</p>
+                            </b-col>
+                            <b-col col lg="6">
+                                <b-form-input
+                                        id="input-harga"
+                                        required
+                                        v-model="username"
+                                        type="text"
+                                ></b-form-input>
+                                <br>
+                            </b-col>
+                        </b-row>
+                        <br><br>
+                        <b-row>
+                            <b-col col lg="2">
+                            </b-col>
+                            <b-col col lg="3">
+                                <p>Kode Verifikasi</p>
+                            </b-col>
+                            <b-col col lg="auto">
+                                <p>:</p>
+                            </b-col>
+                            <b-col col lg="6">
+                                <b-form-input
+                                        id="input-harga"
+                                        required
+                                        v-model="passwordL"
+                                        type="text"
+                                ></b-form-input>
+                                <br>
+                            </b-col>
+                        </b-row>
+                        <br><br>
+                        <b-row>
+                            <b-col col lg="2">
+                            </b-col>
+                            <b-col col lg="9">
+
+                            </b-col>
+                            <b-col col lg="auto">
+                            </b-col>
+                            <b-col col lg="6">
+                            </b-col>
+                        </b-row>
+
+                        <b-form-row class="justify-content-md-center">
+                            <b-col col md="4" lg="8">
+                            </b-col>
+                            <b-col col md="5" lg="1">
+                            </b-col>
+                            <b-col col md="auto" lg="1" class="mt-3">
+                                <button type="submit" id="tombol-daftar" @click="update"
+                                        class="pl-3 pr-3 btn btn-primary">Kirim
                                 </button>
                             </b-col>
                         </b-form-row>
-                        <br><br>
-                        <b-row>
-                            <b-col col lg="2">
-                            </b-col>
-                            <b-col col lg="3">
-                                <p>Nama </p>
-                            </b-col>
-                            <b-col col lg="auto">
-                                <p>:</p>
-                            </b-col>
-                            <b-col col lg="6">
-                                <b-form-input
-                                        id="input-harga"
-                                        v-model="profile.name"
-                                        required
-                                        type="text"
-                                ></b-form-input>
-                            </b-col>
-                        </b-row>
-                        <br><br>
-                        <b-row>
-                            <b-col col lg="2">
-                            </b-col>
-                            <b-col col lg="3">
-                                <p>Email</p>
-                            </b-col>
-                            <b-col col lg="auto">
-                                <p>:</p>
-                            </b-col>
-                            <b-col col lg="6">
-                                <b-form-input
-                                        id="input-harga"
-                                        v-model="profile.email"
-                                        required
-                                        type="email"
-                                ></b-form-input>
-                            </b-col>
-                        </b-row>
-                        <br><br>
-                        <b-row>
-                            <b-col col lg="2">
-                            </b-col>
-                            <b-col col lg="3">
-                                <p>Alamat</p>
-                            </b-col>
-                            <b-col col lg="auto">
-                                <p>:</p>
-                            </b-col>
-                            <b-col col lg="6">
-                                <b-form-input
-                                        id="input-harga"
-                                        v-model="profile.alamat"
-                                        required
-                                        type="text"
-                                ></b-form-input>
-                            </b-col>
-                        </b-row>
-                        <br><br>
                         <b-form-row class="justify-content-md-center">
-                            <b-col col md="4" lg="6">
+                            <b-col col md="4" lg="8">
+                            </b-col>
+                            <b-col col md="5" lg="1">
+                            </b-col>
+                            <b-col col md="auto" lg="3" class="mt-3">
 
-                            </b-col>
-                            <b-col col md="5" lg="3">
-                                <router-link :to="'/gantiPassword'">
-                                    <br>
-                                    <p style="size: 10px">Ganti Password</p>
-                                </router-link>
-                            </b-col>
-                            <b-col col md="auto" lg="2" class="mt-3">
-                                <button type="submit" id="tombol-daftar" @click="update"
-                                        class="pl-3 pr-3 btn btn-primary">Ubah
-                                </button>
                             </b-col>
                         </b-form-row>
                         <br><br>
@@ -108,47 +96,39 @@
 </template>
 
 <script>
+    // eslint-disable-next-line no-unused-vars
     import axios from "axios";
 
     export default {
-        name: "ProfilePage",
-        mounted() {
-            this.load()
-        },
+        name: "VerifikasiCodePage",
         data() {
-            var val = false;
-            if (localStorage.getItem('token')) {
-                val = true
-            }
             return {
-                role: localStorage.getItem("role"),
-                sku: localStorage.getItem("sku"),
-                metode: '',
-                profile: '',
-                nama: localStorage.getItem('nickName'),
-                authenticated: val
+                passwordL: '',
+                username: '',
             }
         },
         methods: {
-            pesanPenginapan() {
-
-            },
-            async load() {
-                const response = await axios.get('https://portal-desa.herokuapp.com/auth/findSku/' + this.sku)
-                this.profile = response.data
-                console.log(this.profile)
-            },
             async update() {
-                await axios.put('https://portal-desa.herokuapp.com/auth/update/' + this.sku, {
-                    name: this.profile.name,
-                    alamat: this.profile.alamat,
-                    email: this.profile.email
-                })
-                    .then(
-                        alert("Ubah Profile Sukses")
-                    )
-            }
+                if (this.passwordL === "" || this.username === "") {
+                    alert("Semua Field Harus Di Isi")
+                } else {
+                    const response = await axios.post('https://portal-desa.herokuapp.com/auth/checkCode', {
+                        kode :this.passwordL,
+                        username : this.username
+                    })
+                    console.log(response.data.status)
+                    if (response.data.status === 402) {
+                        alert("Username salah")
+                    } else if(response.data.status === 400 ) {
+                        alert("Kode verifikasi anda salah")
+                    }else{
+                        alert("Password baru anda sudah dikirim ke email anda.")
+                        window.location.href="/login"
+                    }
 
+                }
+
+            }
         }
     }
 </script>
@@ -178,3 +158,4 @@
     }
 
 </style>
+
