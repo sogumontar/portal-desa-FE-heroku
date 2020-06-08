@@ -240,16 +240,16 @@
                 } else if (this.alamat === '') {
                     alert("Alamat Pengiriman Harus Di isi")
                 } else {
-                    console.log()
+                    console.log(this.produk.harga*this.jumlah)
                     axios.post('https://portal-desa.herokuapp.com/transaksi/add', {
                         skuProduk: this.$route.params.sku,
                         skuCustomer: this.sku,
                         alamat: this.detail.alamat,
-                        harga: this.produk.harga,
+                        harga: this.produk.harga*this.jumlah,
                         metode: this.metode
                     })
                         // eslint-disable-next-line no-unused-vars
-                        .then(
+                        .then( alert("Pesanan Sukses dibuat"),
                             window.location.href = "/daftarPesanan"
                         )
                 }

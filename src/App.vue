@@ -75,7 +75,7 @@
                             <router-link to="/profile">Profile</router-link>
                         </b-dropdown-item>
                         <b-dropdown-item>
-                            <router-link to="/admin">Pesanan</router-link>
+                            <router-link to="/daftarPesanan">Pesanan</router-link>
                         </b-dropdown-item>
                         <b-dropdown-item>
                             <router-link to="/keranjang">Keranjang</router-link>
@@ -98,7 +98,12 @@
             </b-collapse>
         </b-navbar>
     </div>
-    <router-view/>
+    <div class="page">
+        <router-view/>
+    </div>
+    <div class="footer p-4">
+        <h6>Copyright &copy; PA-III-2020</h6>
+    </div>
     </html>
 </template>
 
@@ -130,6 +135,20 @@
 </script>
 
 <style>
+    html, body{
+        height: 91.3%;
+    }
+    .page{
+        min-height: 100%;
+    }
+    .footer{
+        background-color: #5BC2E7;
+        text-align: center;
+        color: black;
+        font-weight: bold;
+        font-family: "Arial Black";
+        position: relative;
+    }
     #navb {
         background-color: #5BC2E7;
     }

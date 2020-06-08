@@ -104,7 +104,7 @@
                             if(response.data.role === "ROLE_MERCHANT"){
                                 window.location.href="/"
                             }else if(response.data.role === "ROLE_ADMIN") {
-                                window.location.href="/"
+                                window.location.href="/admin"
                             }else{
                                 window.location.href="/"
                                 // this.$router.push({name: 'home'})

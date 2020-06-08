@@ -35,6 +35,7 @@
 
                                 <b-btn variant="danger" v-if="tab === 2" @click="tolakProduk(data.id)">Tolak</b-btn>&nbsp;&nbsp;&nbsp;&nbsp;
                                 <b-btn variant="success" v-if="tab === 2" @click="terimaProduk(data.id)">Terima</b-btn>
+
                             </div>
                         </div>
                         <div v-else-if="tab >2">
@@ -49,7 +50,7 @@
                             <p>Lama Menginap : {{data[0].lamaMenginap}}</p>
                             <p>Metode : {{data[0].metode}}</p>
                             <p>Harga : Rp. {{data[0].harga | numFormat}}</p>
-                            <div v-if="tab === 4 && data.status === 2">
+                            <div v-if="tab === 4 && data[0].status === 2">
                                 <img
                                         width="500px"
                                         :src="'https://portal-desa.herokuapp.com/transaksi/get/'+data[0].resi" alt="">

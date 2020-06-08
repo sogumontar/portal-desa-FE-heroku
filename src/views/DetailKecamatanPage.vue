@@ -3,11 +3,11 @@
         <h2 class="judul mt-3">Daftar Desa di Kecamatan {{value}}</h2>
         <hr>
         <b-row>
-            <b-col col lg="1">
+            <b-col cols="1" col lg="1" sm="1" md="1" >
 
             </b-col>
 
-            <b-col col lg="9">
+            <b-col cols="12" col lg="9">
                 <b-row v-for="produk in produk" :key="produk.sku" class="mb-3 metric-tarif">
 
                     <b-col lg="auto p-4">
@@ -21,49 +21,49 @@
                     <b-col class="keterangan p-4">
 
                         <b-row >
-                            <b-col col lg="5">
+                            <b-col cols="5" col lg="5">
                                 <p>Nama Desa</p>
                             </b-col>
-                            <b-col col lg="auto">
+                            <b-col cols="auto" col lg="auto">
                                 <p>:</p>
                             </b-col>
-                            <b-col col lg="auto">
+                            <b-col cols="auto" col lg="auto">
                                 <p>{{ produk.nama }}</p>
                             </b-col>
                         </b-row>
 
                         <b-row>
-                            <b-col col lg="5">
+                            <b-col cols="5" col lg="5">
                                 <p>Nama Kepala Desa</p>
                             </b-col>
-                            <b-col col lg="auto">
+                            <b-col cols="auto" col lg="auto">
                                 <p>:</p>
                             </b-col>
-                            <b-col col lg="auto">
+                            <b-col cols="auto" col lg="auto">
                                 <p>{{ produk.namaKepalaDesa }}</p>
                             </b-col>
                         </b-row>
 
                         <b-row>
-                            <b-col col lg="5">
+                            <b-col cols="5" col lg="5">
                                 <p>Jumlah Penduduk</p>
                             </b-col>
-                            <b-col col lg="auto">
+                            <b-col cols="auto" col lg="auto">
                                 <p>:</p>
                             </b-col>
-                            <b-col col lg="auto">
+                            <b-col cols="auto" col lg="auto">
                                 <p>{{ produk.jumlahPenduduk }}</p>
                             </b-col>
                         </b-row>
 
                         <b-row>
-                            <b-col col lg="5">
+                            <b-col cols="5" col lg="5">
                                 <p>Status</p>
                             </b-col>
-                            <b-col col lg="auto">
+                            <b-col cols="auto" col lg="auto">
                                 <p>:</p>
                             </b-col>
-                            <b-col col lg="auto">
+                            <b-col cols="auto" col lg="auto">
                                 <p v-if="produk.status === 1">Aktif</p>
                                 <p v-else>Tidak Aktif</p>
                             </b-col>
@@ -75,7 +75,7 @@
                             </b-col>
                         </b-row>
 
-                    </b-col>                </b-row>
+                    </b-col></b-row>
             </b-col>
         </b-row>
 

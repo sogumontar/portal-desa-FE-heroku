@@ -23,7 +23,7 @@
                         <p>Kecamatan : <br>{{desa.kec}}</p>
                     </b-col>
             </b-row>
-            <div class="tombol" v-if="role === 'ROLE_MERCHANT'">
+            <div class="tombol" v-if="role === 'ROLE_MERCHANT' && produk.skuDesa === skuLog">
                 <b-row class="justify-content-md-center justify-content-lg-center justify-content-sm-center">
                   <b-btn @click="hapus" class="btn btn-danger mr-3">Hapus</b-btn>
                     <button  class="btn btn-primary"><router-link :to="'/updateProduk/'+produk.sku">Update</router-link></button>
@@ -40,32 +40,6 @@
                     <button  @click="addToCart" class="btn btn-success">Keranjang</button>
                 </b-row>
             </div>
-
-<!--            <center>-->
-<!--                <b-card no-body class="overflow-hidden" style="max-width: 80%;">-->
-<!--                    <b-row no-gutters class="metric-tarif">-->
-<!--                        <b-col md="6">-->
-<!--                            <b-img-->
-<!--                                    rounded=""-->
-<!--                                    src="https://upload.wikimedia.org/wikipedia/commons/2/2e/Kecamatan_Balige%2C_Toba_Samosir_02.jpg"-->
-<!--                                    fluid></b-img>-->
-<!--                        </b-col>-->
-<!--                        <b-col md="6">-->
-<!--                            <b-card-body>-->
-<!--                                <h3>{{produk.nama}}</h3>-->
-<!--                                <b-card-text>-->
-<!--                                    <p>Nama Produk : {{produk.nama}}</p>-->
-<!--                                    <p>Harga : {{produk.harga}}</p>-->
-<!--                                    <p>Deskripsi : {{produk.deskripsi}}</p>-->
-<!--                                </b-card-text>-->
-<!--                            </b-card-body>-->
-<!--                        </b-col>-->
-<!--                    </b-row>-->
-<!--                </b-card>-->
-<!--                <router-link :to="'/beliProduk/'+produk.sku"><b-btn class="btn btn-success">Beli</b-btn></router-link>-->
-<!--                <b-btn class="btn btn-primary">Tambah Ke Keranjang</b-btn>-->
-<!--            </center>-->
-<!--            <br><br>-->
         </div>
         <br><br><br><br>
         <br><br><br><br>
@@ -81,6 +55,7 @@
         data() {
             return {
                 sku: this.$route.params.sku,
+                skuLog : localStorage.getItem('sku'),
                 produk: [],
                 jumlah: 1,
                 skuDesa: '',
