@@ -118,7 +118,7 @@
                     })
                     console.log(response.data.status)
                     if (response.data.status === 402) {
-                        alert("Username salah")
+                        alert("Username tidak terdaftar")
                     } else if(response.data.status === 400 ) {
                         alert("Kode verifikasi anda salah")
                     }else{

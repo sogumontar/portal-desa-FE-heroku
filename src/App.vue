@@ -18,19 +18,19 @@
                 <b-navbar-nav class="ml-auto mt-1">
                     <b-navbar-nav class="mr-4">
                         <b-nav-item v-if="role!='ROLE_ADMIN'">
-                            <router-link to="/desa">Desa</router-link>
+                            <router-link to="/desa" ><p style="color: #ffffff">Desa</p></router-link>
                         </b-nav-item>
                         <b-nav-item v-if="role!='ROLE_ADMIN'">
-                            <router-link to="/produk">Produk</router-link>
+                            <router-link to="/produk"><p style="color: #ffffff">Produk</p></router-link>
                         </b-nav-item>
                         <b-nav-item v-if="role!='ROLE_ADMIN'">
-                            <router-link to="/penginapan">Penginapan</router-link>
+                            <router-link to="/penginapan"><p style="color: #ffffff">Penginapan</p></router-link>
                         </b-nav-item>
                         <b-nav-item v-if="role=='ROLE_ADMIN'">
-                            <router-link to="/admin/account">Data Akun</router-link>
+                            <router-link to="/admin/account"><p style="color: #ffffff">Data Akun</p></router-link>
                         </b-nav-item>
                         <b-nav-item v-if="role=='ROLE_ADMIN'">
-                            <router-link to="/admin/desa">Data Desa</router-link>
+                            <router-link to="/admin/desa"><p style="color: #ffffff">Data Desa</p></router-link>
                         </b-nav-item>
                     </b-navbar-nav>
                     <p class="h2">
@@ -76,6 +76,9 @@
                         </b-dropdown-item>
                         <b-dropdown-item>
                             <router-link to="/admin">Pesanan</router-link>
+                        </b-dropdown-item>
+                        <b-dropdown-item>
+                            <router-link to="/keranjang">Keranjang</router-link>
                         </b-dropdown-item>
                         <b-dropdown-item><a v-on:click="logout" v-if="authenticated" href="/">Logout</a>
                             <router-link v-else to="/login">Login</router-link>
@@ -128,7 +131,7 @@
 
 <style>
     #navb {
-        background-color: #ACE7EF;
+        background-color: #5BC2E7;
     }
 
     /* Extra small devices (phones, 600px and down) */
