@@ -98,7 +98,7 @@
                     jumlah: this.jumlah,
                     skuDesa: this.produk.skuDesa,
                     harga: this.produk.harga
-                }).then(this.$router.push('/keranjang'))
+                }).then(alert("Tambah Ke Keranjang Sukses"))
 
                 console.log(response)
             },

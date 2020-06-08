@@ -8,19 +8,21 @@
 
                 </b-col>
                 <b-col cols="10">
-                    <b-row v-for="keranjang in keranjang" :key="keranjang.id" class="metric-tarif mt-2">
+                    <b-row v-for="(keranjang,index) in keranjang" :key="keranjang.id" class="metric-tarif mt-2">
                         <b-col cols="12" col sm="10" lg="auto">
                             <b-img thumbnail :src="'https://portal-desa.herokuapp.com'+keranjang[1].gambar" class="gambar-produk p-3 m-2"></b-img>
                         </b-col>
                         <b-col class="ml-3 m">
                             <h1>{{keranjang[1].nama}}</h1>
-                            <p style="font-size: 20px; margin-left: 2px">Harga : Rp. {{keranjang[1].harga | numFormat}}</p>
+                            <p style="font-size: 20px; margin-left: 2px">Harga : Rp. {{keranjang[1].harga*keranjang[0].jumlah | numFormat}}</p>
                             <b-row class="ml-1">
-                                <h4><b-icon-dash-circle class="mt-1" @click="kurang_jumlah"></b-icon-dash-circle><b-icon-dash></b-icon-dash></h4>
+                                <h4><b-icon-dash-circle class="mt-1" @click="kurang_jumlah(index)"></b-icon-dash-circle><b-icon-dash></b-icon-dash></h4>
                                 <h5><p class="metric-tarif-jumlah">{{ keranjang[0].jumlah }}</p></h5>
-                                <h4><b-icon-dash></b-icon-dash><b-icon-plus-circle class="mt-1" @click="tambah_jumlah"></b-icon-plus-circle></h4>
+                                <h4><b-icon-dash></b-icon-dash><b-icon-plus-circle class="mt-1" @click="tambah_jumlah(index)"></b-icon-plus-circle></h4>
                             </b-row>
                             <b-button variant="danger" size="sm"><b-icon-trash></b-icon-trash> Hapus</b-button>
+                            <br><br>
+                            <br><br>
                         </b-col>
                     </b-row>
                     <b-row class="mt-3 mb-4">
@@ -28,91 +30,109 @@
 
                         </b-col>
                         <b-col>
-                            <b-button variant="primary" size="lg" v-if="keranjang.length!=0">Pesan</b-button>
+<!--                            <b-button variant="primary" size="lg" v-if="keranjang.length!=0">Pesan</b-button>-->
                         </b-col>
                     </b-row>
 
-
-<!--                    <p>Jumlah : {{keranjang[0].jumlah}}</p>-->
-
-<!--                    <p>Harga Total : {{keranjang[0].harga}}</p>-->
                 </b-col>
                 <b-col cols="auto">
 
                 </b-col>
             </div>
-<!--            <div class="mt-4 p-3 ml-2">-->
-<!--                <b-row>-->
-<!--                    <b-col cols="auto" col lg="auto" md="auto"  sm="auto">-->
-<!--                        <h5>Alamat : <input type="text" class="form-control" v-if="detail.length!=0" v-model="detail.alamat"></h5>-->
-<!--                    </b-col>-->
-<!--                </b-row>-->
+            <div class="mt-4 p-3 ml-2"  v-if="keranjang.length!=0">
+                <b-row>
 
-<!--                <b-row>-->
-<!--                    <b-col>-->
-<!--                        <b-button v-if="detail.length!=0" variant="primary" @click="ubah">Ubah Alamat</b-button>-->
-<!--                        <b-button v-else variant="primary" @click="tambahAlamat" size="sm">Tambah Alamat</b-button>-->
-<!--                    </b-col>-->
-<!--                </b-row>-->
+                    <b-col col lg="3">
+                        <h5>Alamat</h5>
+                    </b-col>
+                    <b-col col lg="auto">
+                        <h5>:</h5>
+                    </b-col>
+                    <b-col cols="auto" col lg="3" md="auto" sm="auto">
+                        <b-form-input size="sm" type="text" class="form-control" v-if="detail.length!=0"
+                                      v-model="detail.alamat"></b-form-input>
+                    </b-col>
+                    <b-col col lg="auto" offset-lg="1">
+                        <b-button v-if="detail.length!=0" variant="primary" @click="ubah" size="sm">Ubah Alamat
+                        </b-button>
+                        <b-button v-else variant="primary" @click="show" size="sm">Tambah Alamat</b-button>
+                    </b-col>
+                </b-row>
 
-<!--                <b-row class="mt-4">-->
-<!--                    <b-col cols="auto" col lg="auto" md="auto"  sm="auto">-->
-<!--                        <h5>Total Pembayaran : Rp. {{ produk.harga*jumlah | numFormat }}</h5>-->
+                <b-row class="mt-4">
+                    <b-col cols="auto" col lg="auto" md="auto"  sm="auto">
+                        <h5>Total Pembayaran : Rp. {{ sum | numFormat }}</h5>
 <!--                        <b-button variant="primary" @click="show" size="sm">Detail</b-button>-->
-<!--                    </b-col>-->
-<!--                </b-row>-->
-                <!--                <b-card class="row">-->
-                <!--                    <b-card-text class="col-md-5">-->
-                <!--                        <p>Alamat : {{detail.alamat}}</p>-->
-                <!--                        <b-btn v-if="detail.length!=0"  @click="show" class="btn btn-info">Ubah</b-btn>-->
-                <!--                        <b-btn v-else class="btn btn-info" @click="show">isi</b-btn>-->
-                <!--                    </b-card-text>-->
-                <!--                    <b-card-text class="col-md-5">-->
-                <!--                        <p>Total Pembayaran : Rp.{{produk.harga | numFormat}} </p>-->
-                <!--                        &lt;!&ndash;                        <b-btn v-if="produk.length!=1" class="btn btn-info">Ubah</b-btn>&ndash;&gt;-->
-                <!--                    </b-card-text>-->
-                <!--                    <b-card-text class="col-md-5">-->
-                <!--                        <p>Metode Pembayaran : </p>-->
-                <!--                        <select class="form-control" v-model="metode">-->
-                <!--                            <option value="COD">COD</option>-->
-                <!--                            <option value="ATM">ATM</option>-->
-                <!--                            <option value="Indomaret">Indomaret</option>-->
-                <!--                        </select>-->
-                <!--                    </b-card-text>-->
-                <!--                    <b-btn variant="success" @click="submit">Selesai</b-btn>-->
-                <!--                </b-card>-->
-<!--                <modal name="hello-world">-->
-<!--                    <b-form @submit="formSubmit" class="mt-3" >-->
-<!--                        <b-form-row class="justify-content-sm-center mt-3">-->
-<!--                            <b-col cols="3" col md="2" sm="2" lg="1" class="mt-2">-->
-<!--                                <p>Alamat</p>-->
-<!--                            </b-col>-->
-<!--                            <b-col cols="auto" col md="auto" lg="auto" sm="auto" class="mt-2">-->
-<!--                                <p>:</p>-->
-<!--                            </b-col>-->
-<!--                            <b-col cols="8" col md="5" lg="4" sm="7">-->
-<!--                                <b-form-input-->
-<!--                                        id="input-alamat"-->
-<!--                                        v-model="detail.alamat"-->
-<!--                                        required-->
-<!--                                        type="text"-->
-<!--                                ></b-form-input>-->
-<!--                            </b-col>-->
-<!--                        </b-form-row>-->
-<!--                        <b-form-row class="justify-content-md-center">-->
-<!--                            <b-col col md="4" lg="2">-->
+                    </b-col>
+                </b-row>
+                                <b-card class="row">
+                                    <b-card-text class="col-md-5">
+<!--                                        <p>Alamat : {{detail.alamat}}</p>-->
+<!--                                        <b-btn v-if="detail.length!=0"  @click="show" class="btn btn-info">Ubah</b-btn>-->
+<!--                                        <b-btn v-else class="btn btn-info" @click="show">isi</b-btn>-->
+                                    </b-card-text>
+                                    <b-card-text class="col-md-5">
+                                        <p>Total Pembayaran : Rp.{{produk.harga | numFormat}} </p>
+                                        <!--                        <b-btn v-if="produk.length!=1" class="btn btn-info">Ubah</b-btn>-->
+                                    </b-card-text>
+                                    <b-col cols="12" col lg="7">
+                                        <section>
+                                            <h3>radio buttons</h3>
+                                            <input type="radio" v-model="metode" value="ATM Mandiri">ATM Mandiri
+                                            <input type="radio" v-model="metode" value="Atm BRI">Atm BRI
+                                            <br><br>
+                                            <div v-if="metode === 'ATM Mandiri'">
+                                                <img src="../assets/pict/atm.png" width="200px" alt="">
+                                                <br><br>
+                                                <h3>No Rek : 5412751234123456</h3>
+                                                <h3>Atas Nama : Benyamin Simanungkalit</h3>
+                                            </div>
+                                            <div v-else-if="metode === 'Atm BRI'">
+                                                <img src="../assets/pict/atm.png" width="201px" alt="">
+                                                <br><br>
+                                                <h3>No Rek : 7712654312317006</h3>
+                                                <h3>Atas Nama : Ojaks Sidabukke</h3>
+                                            </div>
+                                        </section>
 
-<!--                            </b-col>-->
-<!--                            <b-col col md="auto" lg="auto">-->
+                                    </b-col>
+                                    <b-btn variant="success" @click="submit">Selesai</b-btn>
+                                </b-card>
+                <modal name="hello-world">
+                    <b-form @submit="formSubmit" class="mt-3" >
+                        <b-form-row class="justify-content-sm-center mt-3">
+                            <b-col cols="3" col md="2" sm="2" lg="1" class="mt-2">
+                                <p>Alamat</p>
+                            </b-col>
+                            <b-col cols="auto" col md="auto" lg="auto" sm="auto" class="mt-2">
+                                <p>:</p>
+                            </b-col>
+                            <b-col cols="8" col md="5" lg="4" sm="7">
+                                <b-form-input
+                                        id="input-alamat"
+                                        v-model="detail.alamat"
+                                        required
+                                        type="text"
+                                ></b-form-input>
+                            </b-col>
+                        </b-form-row>
+                        <b-form-row class="justify-content-md-center">
+                            <b-col col md="4" lg="2">
 
-<!--                            </b-col>-->
-<!--                            <b-col col md="auto" lg="auto" class="mt-2">-->
-<!--                                <button type="submit" id="tombol-daftar" class="pl-3 pr-3 btn btn-primary">Update</button>-->
-<!--                            </b-col>-->
-<!--                        </b-form-row>-->
-<!--                    </b-form>-->
-<!--                </modal>-->
-<!--            </div>-->
+                            </b-col>
+                            <b-col col md="auto" lg="auto">
+
+                            </b-col>
+                            <b-col col md="auto" lg="auto" class="mt-2">
+                                <button type="submit" id="tombol-daftar" class="pl-3 pr-3 btn btn-primary">Update</button>
+                            </b-col>
+                        </b-form-row>
+                    </b-form>
+                </modal>
+            </div>
+            <div v-else>
+                <h1>Keranjang Kosong</h1>
+            </div>
         </div>
     </div>
 </template>
@@ -132,6 +152,8 @@
                 metode : '',
                 jumlah: 0,
                 keranjang:[],
+                sum:0,
+                cek:0
             }
         }, async mounted() {
             this.sku=localStorage.getItem('sku')
@@ -154,11 +176,11 @@
             show () {
                 this.$modal.show('hello-world');
             },
-            async ubah () {
-                 await axios.put('https://portal-desa.herokuapp.com/customer/update/' + this.sku,{
-                    sku : this.sku,
+            async ubah() {
+                await axios.put('https://portal-desa.herokuapp.com/customer/update/' + this.sku, {
+                    sku: this.sku,
                     alamat: this.detail.alamat
-                })
+                }).then(alert("Alamat berhasil di ubah"))
 
             },
             async tambahAlamat () {
@@ -174,16 +196,29 @@
                 const response = await axios.get('https://portal-desa.herokuapp.com/keranjang/web/customer/' + this.sku)
                 this.keranjang = response.data
                 console.log(this.keranjang)
+                    for(var i =0 ; i<=this.keranjang.length ; i++) {
+                        this.sum += (this.keranjang[i][0].jumlah * this.keranjang[i][0].harga)
+                    }
             },
             formSubmit(){
 
             },
-            tambah_jumlah(){
-                this.jumlah++;
+            tambah_jumlah(index){
+                this.keranjang[index][0].jumlah++;
+                for(var i =0 ; i<=this.keranjang.length ; i++) {
+                    this.cek += (this.keranjang[i][0].jumlah * this.keranjang[i][0].harga)
+                }
+                this.sum=this.cek
+                this.cek=0
             },
-            kurang_jumlah() {
-                if (this.jumlah !== 1) {
-                    this.jumlah--;
+            kurang_jumlah(index) {
+                if (this.keranjang[index][0].jumlah !== 1) {
+                    this.keranjang[index][0].jumlah--;
+                    for(var i =0 ; i<=this.keranjang.length ; i++) {
+                        this.cek += (this.keranjang[i][0].jumlah * this.keranjang[i][0].harga)
+                    }
+                    this.sum=this.cek
+                    this.cek=0
                 }
             },
             submit(){
@@ -192,11 +227,11 @@
                     skuProduk: this.$route.params.sku,
                     skuCustomer: this.sku,
                     alamat : this.detail.alamat,
-                    harga : this.produk.harga,
+                    harga : this.sum,
                     metode : this.metode
                 })
                     // eslint-disable-next-line no-unused-vars
-                    .then(
+                    .then(alert("Proses Transaksi Selesai"),
                         window.location.href="/daftarPesanan"
                     )
             }
