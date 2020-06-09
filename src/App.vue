@@ -65,6 +65,12 @@
                         <b-dropdown-item>
                             <router-link to="/MerchantPenginapan">Penginapan Saya</router-link>
                         </b-dropdown-item>
+                        <b-dropdown-item>
+                            <router-link :to="'/detailDesa/artikel/'+sku">Artikel</router-link>
+                        </b-dropdown-item>
+                        <b-dropdown-item>
+                            <router-link :to="'/createArtikel'">Tambah Artikel</router-link>
+                        </b-dropdown-item>
                         <b-dropdown-item><a v-on:click="logout" v-if="authenticated" href="/">Logout</a>
                             <router-link v-else to="/login">Login</router-link>
                         </b-dropdown-item>
@@ -114,6 +120,7 @@
             if (localStorage.getItem('token')) {
                 return {
                     authenticated: true,
+                    sku:localStorage.getItem('sku'),
                     role: localStorage.getItem('role')
                 }
             }

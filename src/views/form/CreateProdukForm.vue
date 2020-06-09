@@ -1,6 +1,6 @@
 <template>
     <b-container class="mb-5">
-        <h1>Create Produk</h1>
+        <h1>Tambah Produk</h1>
         <b-form @submit="formSubmit" class="mt-3">
             <b-form-row class="justify-content-sm-center">
                 <b-col cols="3" col md="2" sm="2" lg="1" class="mt-2">

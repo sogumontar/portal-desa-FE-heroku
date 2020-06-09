@@ -9,11 +9,12 @@
         <router-link v-if="role=='ROLE_MERCHANT'" to="" class="container">
             <b-btn @click="check" class="btn btn-primary">Tambah Produk</b-btn>
         </router-link>
-        <br><br>
-        <div class="search-wrapper panel-heading col-sm-12">
-            <input class="form-control" type="text" v-model="searchQuery" placeholder="Search"/>
-        </div>
         <hr>
+        <b-row class="justify-content-lg-center m-5">
+            <b-col col lg="6">
+                <input class="form-control" type="text" v-model="searchQuery" placeholder="Cari Produk" />
+            </b-col>
+        </b-row>
         <b-row class="baris-produk justify-content-md-center justify-content-lg-center justify-content-sm-center">
             <b-col class="metric-tarif p-4 m-3 mr-5" v-for="produk in filteredResources.slice(batasbawah, batasatas)"
                    :key="produk.sku" cols="10" col lg="3" sm="8" md="4">

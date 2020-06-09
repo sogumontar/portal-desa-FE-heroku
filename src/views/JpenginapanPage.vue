@@ -9,10 +9,12 @@
                 <!--                <b-button variant="primary"><b-icon-plus></b-icon-plus> Tambah Penginapan</b-button>-->
             </b-col>
         </b-row>
-        <br><br>
-        <div class="search-wrapper panel-heading col-sm-12">
-            <input class="form-control" type="text" v-model="searchQuery" placeholder="Search"/>
-        </div>
+
+        <b-row class="justify-content-lg-center m-5">
+            <b-col cols="12" col lg="6" sm="12">
+                <input class="form-control" type="text" v-model="searchQuery" placeholder="Cari Penginapan" />
+            </b-col>
+        </b-row>
 
         <div right v-if="penginapan.length!==0">
             <b-row class="">

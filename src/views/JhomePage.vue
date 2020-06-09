@@ -2,20 +2,17 @@
     <b-container class="mt-4">
         <b-row>
             <b-col>
-                <input class="form-control" type="text" v-model="searchQuery" placeholder="Search" />
-            </b-col>
-            <b-col>
-                <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
-            </b-col>
-        </b-row>
-        <b-row>
-            <b-col>
                 <p id="judul">Selamat datang di Aplikasi Portal Desa.</p>
                 <p>Aplikasi dari Kabupaten Toba yang menyediakan informasi setiap
                     desa yang terdapat di Kabupaten Toba</p>
             </b-col>
         </b-row>
         <hr>
+        <b-row class="justify-content-lg-center m-5">
+            <b-col cols="12" col lg="6" sm="12">
+                <input class="form-control" type="text" v-model="searchQuery" placeholder="Cari Kecamatan" />
+            </b-col>
+        </b-row>
         <div v-if="kecamatan.length!=0">
             <b-row class="">
                     <b-col cols="12" col lg="4" sm="12" md="6" class="p-4" v-for="item in filteredResources.slice(batasbawah, batasatas)" :key="item.sku">

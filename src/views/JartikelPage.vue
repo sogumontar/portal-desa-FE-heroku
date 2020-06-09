@@ -16,6 +16,8 @@
         </b-navbar>
 
         <b-container>
+            <br><br>
+            <b-btn><router-link to="/createArtikel" style="color: white">Tambah Artikel</router-link></b-btn>
             <b-card body-class="text-center" header-tag="nav" class="mt-5">
                 <template v-slot:header>
                     <b-nav card-header tabs>
@@ -45,7 +47,7 @@
                             <p>Sumber : {{artikel[0].sumber}}</p>
                             <p>Kecamatan : {{artikel[1].kecamatan}}</p>
                             <p>Desa : {{artikel[1].nama}}</p>
-                            <b-btn variant="danger" @click="hapus(artikel[0].id)">Hapus</b-btn>
+                            <b-btn variant="danger" @click="hapusArtikel(artikel[0].id)">Hapus</b-btn>
                         </div>
                     </b-card-text>
                 </div>
@@ -76,26 +78,32 @@
             async load(){
                 const response = await axios.get('https://portal-desa.herokuapp.com/desa/' + this.$route.params.sku)
                 this.desa = response.data
-                this.sku = this.desa.skuAdmin
+                this.sku = this.$route.params.sku
                 console.log(this.desa)
             },
             async tab1(){
                 this.tab=1
-                const response = await axios.get('https://portal-desa.herokuapp.com/artikel/web/artikel' + this.sku)
+                const response = await axios.get('https://portal-desa.herokuapp.com/artikel/web/artikel/' + this.sku)
                 this.artikel=response.data
                 console.log(this.artikel)
             },
             async tab2(){
                 this.tab=2
-                const response = await axios.get('https://portal-desa.herokuapp.com/artikel/web/berita' + this.sku)
+                const response = await axios.get('https://portal-desa.herokuapp.com/artikel/web/berita/' + this.sku)
                 this.artikel=response.data
                 console.log(this.artikel[0])
             },
             async tab3(){
                 this.tab=3
-                const response = await axios.get('https://portal-desa.herokuapp.com/artikel/web/pengumuman'+this.sku)
+                console.log(this.sku)
+                const response = await axios.get('https://portal-desa.herokuapp.com/artikel/web/pengumuman/'+this.sku)
                 this.artikel=response.data
                 console.log(this.artikel)
+            },
+            async hapusArtikel(id){
+                await axios.delete('https://portal-desa.herokuapp.com/artikel/delete/'+id)
+                .then(alert("Hapus Artikel Sukses"))
+                this.tab1()
             },
         }
     }

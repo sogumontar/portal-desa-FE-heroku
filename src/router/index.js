@@ -37,7 +37,7 @@ import UpdateDetailDesaForm from "../views/form/UpdateDetailDesaForm";
 import GantiPasswordPage from "../views/form/GantiPasswordPage";
 import LupaPasswordPage from "../views/form/LupaPasswordPage";
 import VerifikasiCodePage from "../views/form/VerifikasiCodePage";
-
+import CreateArtikel from "../views/form/CreateArtikel";
 
 Vue.use(VueRouter);
 
@@ -46,6 +46,11 @@ const routes = [
         path: "/",
         name: "Home",
         component: JhomePage
+    },
+    {
+        path: "/createArtikel",
+        name: "CreateArtikel",
+        component: CreateArtikel
     },
     {
         path: "/verifikasiCode",

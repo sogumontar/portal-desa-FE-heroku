@@ -44,12 +44,18 @@
                         </div>
                         <div v-if="tab ===2 || tab === 4">
                             <center>
-                                <img
+                                <img v-if="tab === 4"
                                         width="300px"
                                         height="350px"
                                         align="center"
                                         class="card"
-                                        :src="'https://portal-desa.herokuapp.com/transaksi/get/'+data.resi" alt="">
+                                        :src="'https://portal-desa.herokuapp.com/transaksi/get/'+data[0].resi" alt="">
+                                <img v-if="tab === 2"
+                                     width="300px"
+                                     height="350px"
+                                     align="center"
+                                     class="card"
+                                     :src="'https://portal-desa.herokuapp.com/transaksi/get/'+data.resi" alt="">
                             </center>
                             <div v-if="tab === 2">
                                 <div v-if="data.status != 5 && data.status !=4">
@@ -58,7 +64,7 @@
                             </div>
                             <div v-else>
                                 <div v-if="data[0].status === 2">
-                                    <button @click="show(data.id)" class="btn btn-primary">Ubah Resi</button>
+                                    <button @click="show(data[0].id)" class="btn btn-primary">Ubah Resi</button>
                                 </div>
                             </div>
                         </div>
@@ -173,7 +179,7 @@
                 var vm = this;
                 reader.onload = (e) => {
                     vm.image = e.target.result;
-                    if(this.tab === 1 ) {
+                    if(this.tab <3 ) {
                         axios.put('https://portal-desa.herokuapp.com/transaksi/bayar/' + this.selected, {
                             resi: reader.result,
                             skuCustomer: localStorage.getItem("sku")
