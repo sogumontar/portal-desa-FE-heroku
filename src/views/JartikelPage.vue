@@ -17,7 +17,7 @@
 
         <b-container>
             <br><br>
-            <b-btn><router-link to="/createArtikel" style="color: white">Tambah Artikel</router-link></b-btn>
+            <b-btn v-if="role =='ROLE_MERCHANT' "><router-link to="/createArtikel" style="color: white">Tambah Artikel</router-link></b-btn>
             <b-card body-class="text-center" header-tag="nav" class="mt-5">
                 <template v-slot:header>
                     <b-nav card-header tabs>
@@ -34,6 +34,11 @@
                 </div>
                 <div class="card">
                     <br><br><br><br>
+                    <div v-if="artikel.length === 0">
+                        <h2 v-if="tab === 1" >Artikel Belum Ada </h2>
+                        <h2 v-else-if="tab === 2">Berita Belum Ada </h2>
+                        <h2 v-else>Pengumuman Belum Ada </h2>
+                    </div>
                     <b-card-text v-for="artikel in artikel" :key="artikel[0].id">
                         <div>
                             <p>Judul : {{artikel[0].judul}}</p>
@@ -47,7 +52,7 @@
                             <p>Sumber : {{artikel[0].sumber}}</p>
                             <p>Kecamatan : {{artikel[1].kecamatan}}</p>
                             <p>Desa : {{artikel[1].nama}}</p>
-                            <b-btn variant="danger" @click="hapusArtikel(artikel[0].id)">Hapus</b-btn>
+                            <b-btn variant="danger" v-if="skuLogin === artikel[0].skuAdmin" @click="hapusArtikel(artikel[0].id)">Hapus</b-btn>
                         </div>
                     </b-card-text>
                 </div>
@@ -68,7 +73,9 @@
                 tab:1,
                 desa: [],
                 sku : '',
-                artikel :[]
+                artikel :[],
+                role:'',
+                skuLogin:localStorage.getItem('sku')
             }
         },
         async mounted(){
@@ -76,10 +83,13 @@
         },
         methods:{
             async load(){
-                const response = await axios.get('https://portal-desa.herokuapp.com/desa/' + this.$route.params.sku)
+                const response = await axios.get('https://portal-desa.herokuapp.com/desa/' + this.$route.params.sku.replace("%20"," "))
                 this.desa = response.data
-                this.sku = this.$route.params.sku
-                console.log(this.desa)
+                this.sku = response.data.skuAdmin
+                console.log(this.sku)
+                const responses = await axios.get('https://portal-desa.herokuapp.com/artikel/web/artikel/' + this.sku)
+                this.artikel=responses.data
+                this.role = localStorage.getItem('role')
             },
             async tab1(){
                 this.tab=1

@@ -9,7 +9,7 @@
             </b-col>
         </b-row>
 
-        <b-form @submit="formSubmit" class="mt-3" >
+        <b-form @submit="formSubmit" class="mt-3">
             <b-form-row class="justify-content-sm-center">
                 <b-col cols="3" col md="2" sm="2" lg="1" class="mt-2">
                     <p>Gambar</p>
@@ -24,7 +24,7 @@
                             <input type="file" @change="onFileChange">
                         </div>
                         <div v-else>
-                            <img :src="image" width="120" height="100" />
+                            <img :src="image" width="120" height="100"/>
                             <button @click="removeImage">Remove image</button>
                         </div>
                     </div>
@@ -88,9 +88,11 @@
                 <b-col cols="auto" col md="auto" lg="auto" sm="auto" class="mt-2">
                     <p>:</p>
                 </b-col>
-                <b-col cols="8" col md="5" lg="4" sm="7" >
-                    <b-select  required  v-model="detail.kecamatan">
-                        <b-select-option selected  v-for="kecamatan in kecamatan" :key="kecamatan.sku"  v-model="kecamatan.nama">{{kecamatan.nama}}</b-select-option>
+                <b-col cols="8" col md="5" lg="4" sm="7">
+                    <b-select required v-model="detail.kecamatan">
+                        <b-select-option selected v-for="kecamatan in kecamatan" :key="kecamatan.sku"
+                                         v-model="kecamatan.nama">{{kecamatan.nama}}
+                        </b-select-option>
                     </b-select>
                 </b-col>
             </b-form-row>
@@ -119,45 +121,46 @@
         mounted() {
             this.load()
         },
-        data(){
+        data() {
             return {
-                detail:'',
-                kecamatan :[],
-                image:'',
+                detail: '',
+                kecamatan: [],
+                image: '',
                 name: '',
                 kepalaDesa: '',
                 username: '',
-                email :'',
-                sku :'',
-                jumlah : 0,
-                kec:'',
-                base64 : ''
+                email: '',
+                sku: '',
+                jumlah: 0,
+                kec: '',
+                base64: ''
             }
         },
-        methods : {
-            async load(){
-                this.sku=localStorage.getItem("sku")
-                const response = await axios.get('https://portal-desa.herokuapp.com/desa/desa/skuAdmin/'+this.sku)
-                this.detail=response.data.data
+        methods: {
+            async load() {
+                this.sku = localStorage.getItem("sku")
+                const response = await axios.get('https://portal-desa.herokuapp.com/desa/desa/skuAdmin/' + this.sku)
+                this.detail = response.data.data
                 console.log(this.detail)
                 const responses = await axios.get('https://portal-desa.herokuapp.com/kecamatan/')
                 this.kecamatan = responses.data
-                this.kepalaDesa=this.detail.namaKepalaDesa
-                this.jumlah=this.detail.jumlahPenduduk
+                this.kepalaDesa = this.detail.namaKepalaDesa
+                this.jumlah = this.detail.jumlahPenduduk
 
             },
-            formSubmit(){
-                axios.put('https://portal-desa.herokuapp.com/desa/update/'+this.sku, {
+            formSubmit() {
+                axios.put('https://portal-desa.herokuapp.com/desa/update/' + this.sku, {
                     nama: this.detail.nama,
                     namaKepalaDesa: this.kepalaDesa,
                     jumlahPenduduk: this.jumlah,
-                    kecamatan : this.detail.kecamatan
+                    kecamatan: this.detail.kecamatan
                 })
-                .then(
-                    console.log(this.kepalaDesa),
-                    console.log(this.jumlah)
-                )
-                    // eslint-disable-next-line no-unused-vars
+                    .then((response) => {
+                        console.log(response)
+                        console.log(this.kepalaDesa)
+                        console.log(this.jumlah)
+                    })
+                // eslint-disable-next-line no-unused-vars
 
             },
             onFileChange(e) {
@@ -175,12 +178,13 @@
                 reader.onload = (e) => {
                     vm.image = e.target.result;
                     axios.put('https://portal-desa.herokuapp.com/desa/add/picture', {
-                        base64File : reader.result,
-                        skuDesa : localStorage.getItem("sku")
-                    }).then(
+                        base64File: reader.result,
+                        skuDesa: localStorage.getItem("sku")
+                    }).then( (response)  => {
+                        console.log(response)
                         alert("Add Desa Pict success")
                         // this.$router.push({name: 'daftarAdmin'})
-                    )
+                    })
                 };
                 reader.readAsDataURL(file);
 

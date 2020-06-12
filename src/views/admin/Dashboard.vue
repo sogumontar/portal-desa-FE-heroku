@@ -205,23 +205,28 @@
             async terimaProduk(sku) {
                 await axios.get('https://portal-desa.herokuapp.com/transaksi/terima/' + sku)
                     .then(alert("Terima Pesanan Produk Sukses"),
-                    window.location.href = "/admin")
+                        window.location.href = "/admin")
             },
             async tolakProduk(sku) {
                 await axios.get('https://portal-desa.herokuapp.com/transaksi/tolak/' + sku)
                     .then(alert("Tolak Pesanan Produk Sukses"),
-                    window.location.href = "/admin")
+                        window.location.href = "/admin")
             },
             async terimaPenginapan(sku) {
                 await axios.get('https://portal-desa.herokuapp.com/transaksiPenginapan/terima/' + sku)
-                    .then(alert("Terima Pesanan Penginapan Sukses"),
+                    .then((response) => {
+                        console.log(response)
+                        alert("Terima Pesanan Penginapan Sukses")
                         window.location.href = "/admin"
-                    )
+                    })
             },
             async tolakPenginapan(sku) {
                 await axios.get('https://portal-desa.herokuapp.com/transaksiPenginapan/tolak/' + sku)
-                    .then(alert("Tolak Pesanan Penginapan Sukses"),
-                    window.location.href = "/admin")
+                    .then((response) => {
+                        console.log(response)
+                        alert("Tolak Pesanan Penginapan Sukses")
+                        window.location.href = "/admin"
+                    })
             }
         }
     }

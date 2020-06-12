@@ -108,6 +108,9 @@
 
     export default {
         name: "CreateArtikel",
+        async mounted() {
+            this.load()
+        },
         data() {
             return {
                 judul: '',
@@ -115,10 +118,16 @@
                 isi: '',
                 sumber: '',
                 penulis: '',
-                sku: localStorage.getItem('sku')
+                sku: localStorage.getItem('sku'),
+                desa:''
             }
         },
         methods: {
+            async load(){
+                const response = await axios.get('https://portal-desa.herokuapp.com/desa/desa/skuAdmin/' + this.sku)
+                this.desa=response.data.data.nama
+                console.log(this.desa)
+            },
             async simpan() {
                 console.log(this.sku)
                 axios.post('https://portal-desa.herokuapp.com/artikel/add/' + this.sku, {
@@ -130,7 +139,7 @@
                 }).then((value) => {
                     console.log(value)
                     alert("Tambah Artikel Sukses")
-                    window.location.href = "/detailDesa/artikel/" + this.sku
+                    window.location.href = "/detailDesa/artikel/" + this.desa
                     // expected output: "Success!"
                 });
             }

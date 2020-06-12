@@ -1,7 +1,7 @@
 <template>
     <b-container>
         <h1>Tambah Penginapan</h1>
-        <b-form  class="mt-5">
+        <b-form class="mt-5">
             <b-form-row class="justify-content-sm-center">
                 <b-col cols="3" col md="2" sm="2" lg="2" class="mt-2">
                     <p>Nama Penginapan</p>
@@ -135,6 +135,11 @@
 
     export default {
         name: "JformTambahPenginapan",
+        async mounted() {
+            const response = await axios.get('https://portal-desa.herokuapp.com/desa/desa/skuAdmin/' + this.sku)
+            this.desa = response.data.data
+            console.log(this.desa.kecamatan)
+        },
         data() {
             return {
                 namaPenginapan: "",
@@ -144,7 +149,9 @@
                 hargaPenginapan: "",
                 jumlahKamar: "",
                 gambar: '',
-                selectedFile: null
+                selectedFile: null,
+                desa: '',
+                sku: localStorage.getItem('sku')
 
             }
 
@@ -162,11 +169,14 @@
                     harga: this.hargaPenginapan,
                     deskripsi: this.deskripsiPenginapan,
                     jumlahKamar: this.jumlahKamar,
-                    desa:'Pintubatu',
-                    Kecamatan:'Silaen',
+                    desa: this.desa.nama,
+                    kecamatan: this.desa.kecamatan,
                     lokasi: this.alamatPenginapan,
                     skumerchant: localStorage.getItem("sku")
-                }).then(alert("Tambah penginapan sukses"), window.location.href='/penginapan')
+                }).then((resposnse) => {
+                    console.log(resposnse)
+                    alert("Tambah penginapan sukses"), window.location.href = '/penginapan'
+                })
             },
             onFileChange(e) {
                 var files = e.target.files || e.dataTransfer.files;
@@ -179,17 +189,18 @@
                 // eslint-disable-next-line no-unused-vars
                 var image = new Image();
                 var reader = new FileReader();
-                var vm=this
+                var vm = this
                 reader.onload = (e) => {
                     vm.image = e.target.result;
                     console.log(e.target.result)
                     axios.post('https://portal-desa.herokuapp.com/penginapan/penginapan/add/gambar', {
                         gambar: reader.result,
                         nama: localStorage.getItem('sku')
-                    }).then(
+                    }).then((response) => {
+                        console.log(response)
                         alert("Add Desa Pict success")
                         // this.$router.push({name: 'daftarAdmin'})
-                    )
+                    })
                 };
                 reader.readAsDataURL(file);
 

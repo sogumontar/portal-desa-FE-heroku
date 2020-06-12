@@ -85,7 +85,7 @@
                             </b-col>
                         </b-row>
                         <br><br>
-                        <b-row >
+                        <b-row>
                             <b-col col lg="2">
                             </b-col>
                             <b-col col lg="3">
@@ -95,10 +95,11 @@
                                 <p>:</p>
                             </b-col>
                             <b-col col lg="6">
-                                    <div >
-                                        <img :src="'https://portal-desa.herokuapp.com/desa/get/'+profile.gambar" width="120" height="100" />
-                                        <input type="file" @change="onFileChange">
-                                    </div>
+                                <div>
+                                    <img :src="'https://portal-desa.herokuapp.com/desa/get/'+profile.gambar" width="120"
+                                         height="100"/>
+                                    <input type="file" @change="onFileChange">
+                                </div>
                             </b-col>
                         </b-row>
                         <br><br>
@@ -143,7 +144,7 @@
                 metode: '',
                 profile: '',
                 gambar: '',
-                selectedFile : null,
+                selectedFile: null,
                 nama: localStorage.getItem('nickName'),
                 authenticated: val
             }
@@ -162,11 +163,12 @@
                     nama: this.profile.nama,
                     namaKepalaDesa: this.profile.namaKepalaDesa,
                     jumlahPenduduk: this.profile.jumlahPenduduk,
-                    kecamatan : this.profile.kec
+                    kecamatan: this.profile.kec
                 })
-                    .then(
+                    .then((response) => {
+                        console.log(response)
                         alert("Ubah Detail Desa Sukses")
-                    )
+                    })
             },
             onFileChange(e) {
                 var files = e.target.files || e.dataTransfer.files;
@@ -186,10 +188,11 @@
                     axios.put('https://portal-desa.herokuapp.com/desa/add/picture', {
                         base64File: reader.result,
                         skuDesa: this.profile.sku
-                    }).then(
+                    }).then((response)=> {
+                        console.log(response)
                         alert("Add gambar success")
                         // this.$router.push({name: 'daftarAdmin'})
-                    )
+                    })
                 };
                 reader.readAsDataURL(file);
 

@@ -222,13 +222,19 @@
                 await axios.put('https://portal-desa.herokuapp.com/customer/update/' + this.sku, {
                     sku: this.sku,
                     alamat: this.detail.alamat
-                }).then(alert("Alamat berhasil di ubah"))
+                }).then((response) => {
+                    console.log(response)
+                    alert("Alamat berhasil di ubah")
+                })
 
             },
             async tambahAlamat() {
                 axios.post('https://portal-desa.herokuapp.com/customer/add', {
                     sku: this.sku,
                     alamat: this.detail.alamat
+                }).then((response) => {
+                    console.log(response)
+                    alert("Alamat berhasil ditambah")
                 })
             },
             formSubmit() {
@@ -240,18 +246,20 @@
                 } else if (this.alamat === '') {
                     alert("Alamat Pengiriman Harus Di isi")
                 } else {
-                    console.log(this.produk.harga*this.jumlah)
+                    console.log(this.produk.harga * this.jumlah)
                     axios.post('https://portal-desa.herokuapp.com/transaksi/add', {
                         skuProduk: this.$route.params.sku,
                         skuCustomer: this.sku,
                         alamat: this.detail.alamat,
-                        harga: this.produk.harga*this.jumlah,
+                        harga: this.produk.harga * this.jumlah,
                         metode: this.metode
                     })
                         // eslint-disable-next-line no-unused-vars
-                        .then( alert("Pesanan Sukses dibuat"),
+                        .then((response) => {
+                            console.log(response)
+                            alert("Pesanan Sukses dibuat")
                             window.location.href = "/daftarPesanan"
-                        )
+                        })
                 }
             }
         }

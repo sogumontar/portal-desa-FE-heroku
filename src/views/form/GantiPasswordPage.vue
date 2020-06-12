@@ -117,6 +117,8 @@
                         const response = await axios.put('https://portal-desa.herokuapp.com/auth/updatePassword/' + this.sku, {
                             currentPassword: this.passwordL,
                             newPassword: this.passwordB
+                        }).then((response)=> {
+                            console.log(response)
                         })
                         console.log(response.data.status)
                         if(response.data.status === 400){

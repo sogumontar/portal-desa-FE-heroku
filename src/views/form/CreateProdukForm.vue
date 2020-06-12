@@ -159,10 +159,11 @@
                     axios.post('https://portal-desa.herokuapp.com/produk/add/gambar', {
                         gambar: reader.result,
                         nama: localStorage.getItem('sku')
-                    }).then(
+                    }).then( (response) => {
+                        console.log(response)
                         alert("Add Desa Pict success")
                         // this.$router.push({name: 'daftarAdmin'})
-                    )
+                    })
                 };
                 reader.readAsDataURL(file);
 

@@ -212,7 +212,10 @@
             },
             async hapus(){
                 await axios.put('https://portal-desa.herokuapp.com/penginapan/delete/' + this.$route.params.sku)
-                .then(alert("Hapus Penginapan Sukses"), window.location.href="/penginapan")
+                .then((response) => {
+                    console.log(response)
+                    alert("Hapus Penginapan Sukses"), window.location.href="/penginapan"
+                })
             }
 
         }

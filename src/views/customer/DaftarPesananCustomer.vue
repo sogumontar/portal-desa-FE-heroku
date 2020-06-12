@@ -21,13 +21,13 @@
                     <p v-if="data.length===0 && tab==4">Pesanan Penginapan Sudah Di bayar Kosong</p>
                     <b-card-text class="card" v-for="data in data" :key="data.sku">
                         <div>
-                        <h3 v-if="tab === 2 && data.status === 4" style="color: forestgreen">Pesanan Diterima</h3>
-                        <h3 v-else-if="tab === 2 && data.status === 5" style="color: darkred">Pesanan Ditolak</h3>
-                        <h3 v-else-if="tab === 2" style="color: dodgerblue">Menunggu</h3>
-                        <h3 v-if="tab === 4 && data[0].status === 2" style="color: dodgerblue">Menunggu</h3>
-                        <h3 v-else-if="tab === 4 && data[0].status === 3" style="color: forestgreen">Pesanan
-                            Diterima</h3>
-                        <h3 v-else-if="tab === 4" style="color: darkred">Pesanan Ditolak</h3>
+                            <h3 v-if="tab === 2 && data.status === 4" style="color: forestgreen">Pesanan Diterima</h3>
+                            <h3 v-else-if="tab === 2 && data.status === 5" style="color: darkred">Pesanan Ditolak</h3>
+                            <h3 v-else-if="tab === 2" style="color: dodgerblue">Menunggu</h3>
+                            <h3 v-if="tab === 4 && data[0].status === 2" style="color: dodgerblue">Menunggu</h3>
+                            <h3 v-else-if="tab === 4 && data[0].status === 3" style="color: forestgreen">Pesanan
+                                Diterima</h3>
+                            <h3 v-else-if="tab === 4" style="color: darkred">Pesanan Ditolak</h3>
                         </div>
                         <div v-if="tab <3">
                             <p>Alamat : {{data.alamat}}</p>
@@ -45,11 +45,11 @@
                         <div v-if="tab ===2 || tab === 4">
                             <center>
                                 <img v-if="tab === 4"
-                                        width="300px"
-                                        height="350px"
-                                        align="center"
-                                        class="card"
-                                        :src="'https://portal-desa.herokuapp.com/transaksi/get/'+data[0].resi" alt="">
+                                     width="300px"
+                                     height="350px"
+                                     align="center"
+                                     class="card"
+                                     :src="'https://portal-desa.herokuapp.com/transaksi/get/'+data[0].resi" alt="">
                                 <img v-if="tab === 2"
                                      width="300px"
                                      height="350px"
@@ -87,7 +87,9 @@
                             <div class="col-md-1">
                                 <b-btn variant="danger" v-if="tab === 1" @click="deleteTransProduk(data.id)">Hapus
                                 </b-btn>
-                                <b-btn variant="danger" v-if="tab === 3" @click="deleteTransPenginapan(data[0].id)">Hapus</b-btn>
+                                <b-btn variant="danger" v-if="tab === 3" @click="deleteTransPenginapan(data[0].id)">
+                                    Hapus
+                                </b-btn>
                             </div>
                             <div class="col-md-1">
 
@@ -179,12 +181,12 @@
                 var vm = this;
                 reader.onload = (e) => {
                     vm.image = e.target.result;
-                    if(this.tab <3 ) {
+                    if (this.tab < 3) {
                         axios.put('https://portal-desa.herokuapp.com/transaksi/bayar/' + this.selected, {
                             resi: reader.result,
                             skuCustomer: localStorage.getItem("sku")
                         })
-                    }else{
+                    } else {
                         axios.put('https://portal-desa.herokuapp.com/transaksiPenginapan/bayar/' + this.selected, {
                             resi: reader.result,
                             skuCustomer: localStorage.getItem("sku")
@@ -220,12 +222,19 @@
             },
             async deleteTransProduk(sku) {
                 await axios.get('https://portal-desa.herokuapp.com/transaksi/pesanan/cancel/' + sku)
-                    .then(alert("Hapus Pesanan Sukses"), window.location.href = "/daftarPesanan")
+                    .then((response) => {
+                            console.log(response)
+                            alert("Hapus Pesanan Sukses"), window.location.href = "/daftarPesanan"
+                        }
+                    )
 
             },
             async deleteTransPenginapan(sku) {
                 await axios.get('https://portal-desa.herokuapp.com/transaksiPenginapan/pesanan/cancel/' + sku)
-                .then(alert("Hapus Pesanan Sukses"), window.location.href = "/daftarPesanan")
+                    .then((response) => {
+                        console.log(response)
+                        alert("Hapus Pesanan Sukses"), window.location.href = "/daftarPesanan"
+                    })
 
             },
             formSubmit() {

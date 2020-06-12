@@ -169,10 +169,11 @@
                     axios.post('https://portal-desa.herokuapp.com/produk/update/gambar', {
                         gambar: reader.result,
                         nama: this.detail.gambar
-                    }).then(
+                    }).then((response)=> {
+                        console.log(response)
                         alert("Add gambar success")
                         // this.$router.push({name: 'daftarAdmin'})
-                    )
+                    })
                 };
                 reader.readAsDataURL(file);
 

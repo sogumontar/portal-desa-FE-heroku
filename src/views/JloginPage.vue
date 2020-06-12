@@ -101,6 +101,8 @@
                             localStorage.setItem('sku',response.data.skuLog)
                             localStorage.setItem('nickName',response.data.nickName)
                             localStorage.setItem('setupTime',now)
+                            localStorage.setItem('timeout',new Date().getMinutes())
+                            localStorage.setItem('hours',new Date().getHours())
                             if(response.data.role === "ROLE_MERCHANT"){
                                 window.location.href="/"
                             }else if(response.data.role === "ROLE_ADMIN") {

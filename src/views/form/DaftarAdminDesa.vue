@@ -163,10 +163,11 @@
                         email : this.email,
                         password : this.password,
                         confirmPassword : this.confirmPassword
-                    }).then(
+                    }).then( (response) => {
+                        console.log(response)
                         alert("Admin Desa Registered Successfully")
                         // this.$router.push({name: 'daftarAdmin'})
-                    )
+                    })
                         .then(
                             this.$router.push({name: 'daftarAdmin'})
                         )
