@@ -83,7 +83,6 @@
                 </b-col>
             </b-row>
             <b-col col lg="10">
-                <br><br>
                 <p style="text-align: justify">{{ data.deskripsi }}</p>
             </b-col>
 

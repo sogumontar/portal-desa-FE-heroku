@@ -52,7 +52,7 @@
                                 <p>:</p>
                             </b-col>
                             <b-col cols="auto" col lg="auto">
-                                <p>{{ produk.jumlahPenduduk }}</p>
+                                <p>{{ produk.jumlahPenduduk | numFormat }} jiwa</p>
                             </b-col>
                         </b-row>
 

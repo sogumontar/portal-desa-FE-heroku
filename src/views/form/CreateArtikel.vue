@@ -1,6 +1,7 @@
 <template>
     <b-container class="mb-5">
-        <h1>Tambah Artikel</h1>
+        <h1 class="judul mt-3">Tambah Artikel</h1>
+        <hr>
         <b-form class="mt-3">
             <b-form-row class="justify-content-sm-center">
                 <b-col cols="3" col md="2" sm="2" lg="1" class="mt-2">
@@ -148,5 +149,8 @@
 </script>
 
 <style scoped>
-
+    .judul {
+        text-align: left;
+        font-family: "Arial Black";
+    }
 </style>

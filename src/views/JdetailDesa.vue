@@ -59,7 +59,7 @@
                             <p>:</p>
                         </b-col>
                         <b-col col lg="auto" cols="auto">
-                            <p>{{desa.jumlahPenduduk}}</p>
+                            <p>{{desa.jumlahPenduduk | numFormat}} jiwa</p>
                         </b-col>
                     </b-row>
                 </b-col>

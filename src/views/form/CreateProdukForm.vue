@@ -1,7 +1,8 @@
 <template>
     <b-container class="mb-5">
-        <h1>Tambah Produk</h1>
-        <b-form @submit="formSubmit" class="mt-3">
+        <h1 class="judul mt-3">Tambah Produk</h1>
+        <hr>
+        <b-form @submit="formSubmit" class="mt-5">
             <b-form-row class="justify-content-sm-center">
                 <b-col cols="3" col md="2" sm="2" lg="1" class="mt-2">
                     <p>Nama</p>
@@ -176,5 +177,8 @@
 </script>
 
 <style scoped>
-
+    .judul {
+        text-align: left;
+        font-family: "Arial Black";
+    }
 </style>

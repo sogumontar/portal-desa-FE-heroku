@@ -120,22 +120,26 @@
         name: 'App',
         async mounted() {
             if(localStorage.getItem("token")){
-                const responsed = await axios.get('https://portal-desa.herokuapp.com/desa/desa/skuAdmin/' + this.sku)
-                this.namaDesa=responsed.data.data.nama
+                if(localStorage.getItem("role") === "ROLE_MERCHANT") {
+                    const responsed = await axios.get('https://portal-desa.herokuapp.com/desa/desa/skuAdmin/' + this.sku)
+                    this.namaDesa = responsed.data.data.nama
+                }
                 const Menit = new Date().getMinutes();
                 const Jam = new Date().getHours();
                 var time=localStorage.getItem('timeout')
                 const hours=localStorage.getItem('hours')
                 console.log(Menit)
+                console.log(time)
                 if(time <= 30){
                     console.log("ini")
-                    if(Menit >= parseInt(time)+30){
+                    console.log(Jam + hours)
+                    if(Jam>hours || Menit >= parseInt(time)+30){
                         alert("Sesi anda telah habis, mohon lakukan autentikasi ulang")
                         this.logout()
                     }
                 }else{
                     console.log("bukan")
-                    if(Jam>hours && Menit>= 30-(60-parseInt(time))){
+                    if(Jam>hours || Menit>= 30-(60-parseInt(time))){
                         alert("Sesi anda telah habis, mohon lakukan autentikasi ulang")
                         this.logout()
                     }

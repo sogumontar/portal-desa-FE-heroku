@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container-fluid">
         <br>
         <h3>Daftar Pesanan </h3>
         <hr>
@@ -15,27 +15,77 @@
                     </b-nav>
                 </template>
                 <div class="card">
+                    <div class="row" v-if="tab <3">
+                        <div class="col-md-3">
+                            <h3>Alamat Tujuan</h3>
+                        </div>
+                        <div class="col-md-3">
+                            <h3>Metode Pembayaran</h3>
+                        </div>
+                        <div class="col-md-3">
+                            <h3>Harga</h3>
+                        </div>
+                        <div class="col-md-3">
+                            <h3>Status</h3>
+                        </div>
+                    </div>
+                    <div class="row" v-else>
+                        <div class="col-md-3">
+                            <h3>Penginapan Tujuan</h3>
+                        </div>
+                        <div class="col-md-2">
+                            <h3>Lama Menginap</h3>
+                        </div>
+                        <div class="col-md-3">
+                            <h3>Metode Pembayaran</h3>
+                        </div>
+                        <div class="col-md-2">
+                            <h3>Harga</h3>
+                        </div>
+                        <div class="col-md-2">
+                            <h3>Status</h3>
+                        </div>
+                    </div>
+
                     <p v-if="data.length===0 ">Tidak Ada Pesanan</p>
                     <b-card-text v-for="data in data" :key="data.sku">
-                        <h3 v-if="tab === 2 && data.status === 4" style="color: forestgreen">Pesanan Diterima</h3>
-                        <h3 v-else-if="tab === 2 && data.status === 5" style="color: darkred">Pesanan Ditolak</h3>
-                        <h3 v-else-if="tab === 2" style="color: dodgerblue">Menunggu</h3>
-                        <h3 v-if="tab === 4 && data[0].status === 2" style="color: dodgerblue">Menunggu</h3>
-                        <h3 v-else-if="tab === 4 && data[0].status === 3" style="color: forestgreen">Pesanan
-                            Diterima</h3>
-                        <h3 v-else-if="tab === 4" style="color: darkred">Pesanan Ditolak</h3>
-                        <div v-if="tab <3">
-                            <p>Alamat Tujuan : {{data.alamat}}</p>
-                            <p>Metode Pembayaran : {{data.metode}}</p>
-                            <p>Harga : {{data.harga | numFormat}}</p>
-                            <div v-if="tab === 2">
-                                <img
-                                        width="350px"
-                                        :src="'https://portal-desa.herokuapp.com/transaksi/get/'+data.resi" alt="">
-                                <div v-if="data.status !=4 && data.status !=5">
-                                    <b-btn variant="danger" v-if="tab === 2" @click="tolakProduk(data.id)">Tolak</b-btn>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <b-btn variant="success" v-if="tab === 2" @click="terimaProduk(data.id)">Terima
-                                    </b-btn>
+                        <div v-if="tab <3" class="row">
+                            <div class="col-md-3">
+                                <br>
+                                <br>
+                                <p>{{data.alamat}}</p>
+                            </div>
+                            <div class="col-md-3">
+                                <br>
+                                <br>
+                                <p> {{data.metode}}</p>
+                            </div>
+                            <div class="col-md-3">
+                                <br>
+                                <br>
+                                <p> {{data.harga | numFormat}}</p>
+                            </div>
+                            <div class="col-md-3">
+                                <div v-if="tab === 2">
+                                    <img
+                                            width="350px"
+                                            :src="'https://portal-desa.herokuapp.com/transaksi/get/'+data.resi" alt="">
+                                    <div v-if="data.status !=4 && data.status !=5">
+                                        <b-btn variant="danger" v-if="tab === 2" @click="tolakProduk(data.id)">Tolak
+                                        </b-btn>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <b-btn variant="success" v-if="tab === 2" @click="terimaProduk(data.id)">Terima
+                                        </b-btn>
+                                    </div>
+                                    <div v-else>
+                                        <h3 v-if="tab === 2 && data.status === 4" style="color: forestgreen">Pesanan
+                                            Diterima</h3>
+                                        <h3 v-else-if="tab === 2 && data.status === 5" style="color: darkred">Pesanan
+                                            Ditolak</h3>
+                                        <h3 v-else-if="tab === 4 && data[0].status === 3" style="color: forestgreen">
+                                            Pesanan
+                                            Diterima</h3>
+                                        <h3 v-else-if="tab === 4" style="color: darkred">Pesanan Ditolak</h3>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -47,17 +97,46 @@
                                         class="card"
                                         :src="'https://portal-desa.herokuapp.com'+data[1].gambar" alt="">
                             </center>
-                            <p>Penginapan Tujuan : {{data[1].nama}}</p>
-                            <p>Lama Menginap : {{data[0].lamaMenginap}}</p>
-                            <p>Metode : {{data[0].metode}}</p>
-                            <p>Harga : Rp. {{data[0].harga | numFormat}}</p>
-                            <div v-if="tab === 4 ">
-                                <img
-                                        width="500px"
-                                        :src="'https://portal-desa.herokuapp.com/transaksi/get/'+data[0].resi" alt="">
-                                <div v-if=" data[0].status === 2">
-                                    <b-btn variant="danger" @click="tolakPenginapan(data[0].id)">Tolak</b-btn>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <b-btn variant="success" @click="terimaPenginapan(data[0].id)">Terima</b-btn>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <br>
+                                    <br>
+                                    <p>{{data[1].nama}}</p>
+                                </div>
+                                <div class="col-md-2">
+                                    <br>
+                                    <br>
+                                    <p>{{data[0].lamaMenginap}}</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <br>
+                                    <br>
+                                    <p>{{data[0].metode}}</p>
+                                </div>
+                                <p>Harga : Rp. {{data[0].harga | numFormat}}</p>
+                                <div class="col-md-2">
+                                    <div v-if="tab === 4 " style="margin-left: 30px">
+                                        <img
+                                                width="500px"
+                                                :src="'https://portal-desa.herokuapp.com/transaksi/get/'+data[0].resi"
+                                                alt="">
+                                        <div v-if=" data[0].status === 2">
+                                            <b-btn variant="danger" @click="tolakPenginapan(data[0].id)">Tolak</b-btn>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <b-btn variant="success" @click="terimaPenginapan(data[0].id)">Terima
+                                            </b-btn>
+                                        </div>
+                                        <div v-else>
+                                            <h3 v-if="tab === 2 && data.status === 4" style="color: forestgreen">Pesanan
+                                                Diterima</h3>
+                                            <h3 v-else-if="tab === 2 && data.status === 5" style="color: darkred">
+                                                Pesanan
+                                                Ditolak</h3>
+                                            <h3 v-else-if="tab === 4 && data[0].status === 3"
+                                                style="color: forestgreen">Pesanan
+                                                Diterima</h3>
+                                            <h3 v-else-if="tab === 4" style="color: darkred">Pesanan Ditolak</h3>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -96,7 +175,6 @@
                         <button type="submit" id="tombol-daftar" class="pl-3 pr-3 btn btn-primary">Bayar</button>
                     </b-col>
                 </b-form-row>
-                <hr>
             </b-form>
         </modal>
         <br><br><br>

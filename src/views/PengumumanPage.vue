@@ -1,9 +1,11 @@
 <template>
     <div class="row container">
         <div class="col-md-12">
-            <b-btn variant="s"><router-link to="/artikel">Artikel</router-link></b-btn>&nbsp;&nbsp;
+            <b-btn variant="s">
+                <router-link to="/artikel">Artikel</router-link>
+            </b-btn>&nbsp;&nbsp;
             <b-btn variant="s"><router-link to="/berita">Berita</router-link></b-btn>&nbsp;&nbsp;
-            <b-btn variant="primary"><router-link to="/pengumuman" >Pengumuman</router-link></b-btn>
+            <b-btn variant="primary">Pengumuman</b-btn>
             <br><br><br>
             <div class="container">
                 <div class="card">
