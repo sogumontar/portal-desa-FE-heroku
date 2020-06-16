@@ -101,7 +101,7 @@
                 this.tab = 2
             },
             async block(sku){
-                const responses = await axios.get('https://portal-desa.herokuapp.com/adminDev/account/suspend/'+sku)
+               await axios.get('https://portal-desa.herokuapp.com/adminDev/account/suspend/'+sku)
                     .then((response) => {
                     console.log(response)
                         alert("Blocked Akun Berhasil")
@@ -109,7 +109,7 @@
                 })
             },
             async activate(sku){
-                const responses = await axios.get('https://portal-desa.herokuapp.com/adminDev/account/activate/'+sku)
+                 await axios.get('https://portal-desa.herokuapp.com/adminDev/account/activate/'+sku)
                     .then((response) => {
                         console.log(response)
                         alert("Blocked Akun Berhasil")
