@@ -19,9 +19,8 @@
                             <b-col col md="5" lg="5">
                             </b-col>
                             <b-col col md="auto" lg="3" class="mt-3">
-                                <button type="submit"  class="pl-3 pr-3 btn btn-primary"><router-link :to="'updateDesa/'+profile.sku">Detail
+                              <router-link :to="'updateDesa/'+profile.sku" class="pl-3 pr-3 btn btn-primary">Detail
                                     Desa</router-link>
-                                </button>
                             </b-col>
                         </b-form-row>
                         <br><br>

@@ -139,9 +139,11 @@
                     }
                 }else{
                     console.log("bukan")
-                    if(Jam>hours || Menit>= 30-(60-parseInt(time))){
-                        alert("Sesi anda telah habis, mohon lakukan autentikasi ulang")
-                        this.logout()
+                    if(Jam>hours){
+                        if(Menit>= 30-(60-parseInt(time))) {
+                            alert("Sesi anda telah habis, mohon lakukan autentikasi ulang")
+                            this.logout()
+                        }
                     }
                 }
             }

@@ -12,7 +12,7 @@
 
                     <b-col lg="auto p-4">
                         <b-img
-                                :src="'https://portal-desa.herokuapp.com/desa/get/'+produk.gambar"
+                                :src="'https://portal-desa.herokuapp.com/desa/get/'+produk.sku+'.png'"
                                 fluid
                                 width="300px">
                         </b-img>

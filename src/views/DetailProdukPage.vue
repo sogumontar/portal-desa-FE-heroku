@@ -26,7 +26,7 @@
             <div class="tombol" v-if="role === 'ROLE_MERCHANT' && produk.skuDesa === skuLog">
                 <b-row class="justify-content-md-center justify-content-lg-center justify-content-sm-center">
                   <b-btn @click="hapus" class="btn btn-danger mr-3">Hapus</b-btn>
-                    <button  class="btn btn-primary"><router-link :to="'/updateProduk/'+produk.sku">Update</router-link></button>
+                   <router-link :to="'/updateProduk/'+produk.sku"  class="btn btn-primary">Update</router-link>
                 </b-row>
             </div>
             <div class="tombol" v-else-if="role === 'ROLE_USER'">

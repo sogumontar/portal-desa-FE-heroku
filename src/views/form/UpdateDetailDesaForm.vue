@@ -96,7 +96,7 @@
                             </b-col>
                             <b-col col lg="6">
                                 <div>
-                                    <img :src="'https://portal-desa.herokuapp.com/desa/get/'+profile.gambar" width="120"
+                                    <img :src="'https://portal-desa.herokuapp.com/desa/get/'+profile.sku+'.png'" width="120"
                                          height="100"/>
                                     <input type="file" @change="onFileChange">
                                 </div>
