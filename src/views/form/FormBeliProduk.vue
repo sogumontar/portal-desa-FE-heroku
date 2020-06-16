@@ -96,7 +96,6 @@
                     </b-col>
                     <b-col cols="12" col lg="7">
                         <section>
-                            <h3>radio buttons</h3>
                             <input type="radio" v-model="metode" value="ATM Mandiri">ATM Mandiri
                             <input type="radio" v-model="metode" value="Atm BRI">Atm BRI
                             <br><br>

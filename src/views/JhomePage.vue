@@ -79,16 +79,16 @@
                         <td>{{popular.harga}}</td>
                     </tr>
                     <tr>
-                        <td>Jumlah Pembelian</td>
+                        <td>Deskripsi</td>
                         <td>:</td>
-                        <td>{{popular.jumlahPembelian}}</td>
+                        <td>{{popular.deskripsi}}</td>
                     </tr>
 
                 </table>
             </b-col>
         </b-row>
         <b-row class="p-4">
-            <p><b>Deskripsi</b>:{{popular.deskripsi}}</p>
+<!--            <p><b>Deskripsi</b>:{{popular.deskripsi}}</p>-->
         </b-row>
         <br><br><br>
     </b-container>
