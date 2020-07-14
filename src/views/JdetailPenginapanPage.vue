@@ -97,7 +97,7 @@
 
         </div>
         <div v-else-if="role === 'ROLE_USER'">
-            <b-form @submit="pesanPenginapan" class="mt-5">
+            <b-form class="mt-5">
                 <b-form-row class="justify-content-sm-center">
                     <b-col cols="3" col md="2" sm="2" lg="2" class="mt-2">
                         <p>Tanggal Check-in</p>
@@ -128,8 +128,42 @@
                                 id="jumlah-orang"
                                 v-model="dataMenginap.jumlahOrang"
                                 required
+                                min="0"
                                 type="number"
                         ></b-form-input>
+                    </b-col>
+                </b-form-row>
+
+                <b-form-row class="justify-content-sm-center mt-3">
+                    <b-col cols="3" col md="2" sm="2" lg="2" class="mt-2">
+                        <p>Jumlah Kamar</p>
+                    </b-col>
+                    <b-col cols="auto" col md="auto" lg="auto" sm="auto" class="mt-2">
+                        <p>:</p>
+                    </b-col>
+                    <b-col cols="8" col md="5" lg="4" sm="7">
+                        <b-form-input
+                                id="jumlah-orang"
+                                v-model="dataMenginap.jumlahKamar"
+                                required
+                                min="0"
+                                type="number"
+                        ></b-form-input>
+                    </b-col>
+                </b-form-row>
+
+                <b-form-row class="justify-content-sm-center mt-3">
+                    <b-col cols="3" col md="2" sm="2" lg="2" class="mt-2">
+                        <p>Jenis Kamar</p>
+                    </b-col>
+                    <b-col cols="auto" col md="auto" lg="auto" sm="auto" class="mt-2">
+                        <p>:</p>
+                    </b-col>
+                    <b-col cols="8" col md="5" lg="4" sm="7">
+                        <select class="form-control">
+                            <option> Standard Room</option>
+                            <option> Deluxe Room</option>
+                        </select>
                     </b-col>
                 </b-form-row>
 
@@ -157,13 +191,14 @@
                     </b-col>
                 </b-form-row>
                 <b-form-row class="justify-content-sm-center mt-3 mb-5">
-                    <b-button type="submit" variant="primary" v-if="authenticated">Pesan Penginapan</b-button>
-                    <router-link to="/login" v-else class="btn btn-primary">Login</router-link>
-                    <br>
+
 
                 </b-form-row>
 
             </b-form>
+            <b-button type="submit" variant="primary" @click="pesanPenginapan" v-if="authenticated">Pesan Penginapan</b-button>
+            <router-link to="/login" v-else class="btn btn-primary">Login</router-link>
+            <br>
         </div>
     </b-container>
 </template>
@@ -193,13 +228,27 @@
                     keluar: "",
                     jumlahOrang: 0,
                     jumlahKamar: 0,
+                    jenisKamar: '',
                 },
                 authenticated: val,
             }
         },
         methods: {
-            pesanPenginapan() {
+            async pesanPenginapan() {
+                const response = await axios.post('https://portal-desa.herokuapp.com/transaksiPenginapan/add', {
+                    id : " ",
+                    skuProduk : this.$route.params.sku,
+                    skuCustomer: this.sku,
+                    harga: this.data.harga,
+                    metode: this.metode,
+                    lamaMenginap: this.dataMenginap.jumlahOrang,
+                    checkin: this.dataMenginap.masuk,
+                    resi: "",
+                    status: 1,
+                    kodePemesanan : ""
+                }).then(alert("Pesan Penginapan Sukses"))
 
+                console.log(response)
             },
             async load() {
                 const response = await axios.get('https://portal-desa.herokuapp.com/penginapan/' + this.$route.params.sku)
