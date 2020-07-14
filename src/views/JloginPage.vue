@@ -1,11 +1,11 @@
 <template>
     <b-container>
 
-    <b-row class="justify-content-sm-center">
-        <b-col col md="auto" sm="auto">
-            <p id="logo"><b-icon-people-circle></b-icon-people-circle></p>
-        </b-col>
-    </b-row>
+        <b-row class="justify-content-sm-center">
+            <b-col col md="auto" sm="auto">
+                <p id="logo"><b-icon-people-circle></b-icon-people-circle></p>
+            </b-col>
+        </b-row>
 
         <b-form @submit="onSubmit" class="mt-3">
             <b-form-row class="justify-content-sm-center">
@@ -61,23 +61,22 @@
         </b-form>
 
 
-<!--    </b-form>-->
+        <!--    </b-form>-->
     </b-container>
 </template>
 
 <script>
     import axios from "axios";
-
     export default {
         mounted() {
             console.log('Component mounted.')
         },
         data(){
-          return {
-                  username: '',
-                  password: '',
-                  responses : ''
-          }
+            return {
+                username: '',
+                password: '',
+                responses : ''
+            }
         },
         name: "JloginPage",
         methods: {
@@ -139,8 +138,6 @@
     #input-password{
         border-radius: 10px;
     }
-
-
     @media only screen and (max-width: 600px) {
         #tombol-masuk{
             margin-left: 2px;
@@ -150,7 +147,6 @@
             margin-left: 126px;
         }
     }
-
     /* Small devices (portrait tablets and large phones, 600px and up) */
     @media only screen and (min-width: 600px) {
         #tombol-masuk{
@@ -161,7 +157,6 @@
             margin-left: 70px;
         }
     }
-
     /* Medium devices (landscape tablets, 768px and up) */
     @media only screen and (min-width: 768px) {
         #tombol-masuk{
@@ -172,7 +167,6 @@
             margin-left: 10px;
         }
     }
-
     /* Large devices (laptops/desktops, 992px and up) */
     @media only screen and (min-width: 992px) {
         #tombol-masuk{
@@ -183,7 +177,6 @@
             margin-left: 40px;
         }
     }
-
     /* Extra large devices (large laptops and desktops, 1200px and up) */
     @media only screen and (min-width: 1200px) {
         #tombol-masuk{
@@ -194,5 +187,4 @@
             font-size: 0.9em;
         }
     }
-
 </style>

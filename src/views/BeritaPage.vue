@@ -1,6 +1,7 @@
 <template>
     <div class="row container">
         <div class="col-md-12">
+            <br><br>
             <b-btn variant="s">
                 <router-link to="/artikel">Artikel</router-link>
             </b-btn>&nbsp;&nbsp;
@@ -13,20 +14,25 @@
                 <div class="card">
                     <br><br><br><br>
                     <b-card-text v-for="artikel in artikel" :key="artikel.id">
-                        <div v-if="artikel[0].jenis === 'Berita'">
-                            <p>Judul : {{artikel[0].judul}}</p>
-                            <div v-if="artikel[0].isi.length >50">
-                                <p>Isi : {{artikel[0].isi}}...</p>
-                            </div>
-                            <div v-else>
-                                <p>Isi : {{artikel[0].isi}}</p>
-                            </div>
-                            <p>Penulis : {{artikel[0].penulis}}</p>
-                            <p>Sumber : {{artikel[0].sumber}}</p>
-                            <p>Kecamatan : {{artikel[1].kecamatan}}</p>
-                            <p>Desa : {{artikel[1].nama}}</p>
-                            <b-btn variant="danger" @click="hapus(artikel[0].id)">Hapus</b-btn>
-                        </div>
+                        <p style="margin-left: 133px;"><i><b>{{artikel[0].date}}</b></i></p>
+                        <center>
+                            <b-row>
+                                <div v-if="artikel === null">
+                                    <b-col>
+                                        <h3 style="text-align: center">Artikel Tidak Ada</h3>
+                                    </b-col>
+                                </div>
+                                <div v-else>
+                                    <b-col cols="12" col lg="9">
+                                        <h3>{{ artikel[0].judul }}</h3>
+                                        <p>Penulis: {{ artikel[0].penulis }}, {{ artikel[1].nama }}, {{
+                                            artikel[1].kecamatan }}</p>
+                                        <p style="text-align: justify">{{artikel[0].isi}}</p>
+                                    </b-col>
+                                </div>
+                            </b-row>
+                            <b-btn variant="danger" @click="hapus(artikel[0].id)" class="mb-3">Hapus Artikel</b-btn>
+                        </center>
                     </b-card-text>
                 </div>
             </div>

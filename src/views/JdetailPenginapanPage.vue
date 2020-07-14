@@ -118,7 +118,7 @@
 
                 <b-form-row class="justify-content-sm-center mt-3">
                     <b-col cols="3" col md="2" sm="2" lg="2" class="mt-2">
-                        <p>Lama Menginap</p>
+                        <p>Lama Menginap (Hari)</p>
                     </b-col>
                     <b-col cols="auto" col md="auto" lg="auto" sm="auto" class="mt-2">
                         <p>:</p>
@@ -142,10 +142,10 @@
                     </b-col>
                     <b-col cols="8" col md="5" lg="4" sm="7">
                         <section>
+                            <br>
                             <input type="radio" v-model="metode" value="ATM Mandiri">Atm Mandiri
                             <input type="radio" v-model="metode" value="Atm BRI">Atm BRI
-                            <br/>
-                            <span>value: {{metode}}</span>
+                            <br>
                             <div v-if="metode === 'Atm BRI' ">
                                 <img src="./../assets/pict/atm.png" alt="">
                             </div>

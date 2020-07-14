@@ -27,6 +27,9 @@
                             <router-link to="/penginapan"><p style="color: #ffffff">Penginapan</p></router-link>
                         </b-nav-item>
                         <b-nav-item v-if="role=='ROLE_ADMIN'">
+                            <router-link to="/admin"><p style="color: #ffffff">Home</p></router-link>
+                        </b-nav-item>
+                        <b-nav-item v-if="role=='ROLE_ADMIN'">
                             <router-link to="/admin/account"><p style="color: #ffffff">Data Akun</p></router-link>
                         </b-nav-item>
                         <b-nav-item v-if="role=='ROLE_ADMIN'">
@@ -40,6 +43,9 @@
                     <b-nav-item-dropdown v-if="role=='ROLE_ADMIN'" right class="">
                         <b-dropdown-item>
                             <router-link to="/daftarAdmin">Daftarkan Admin Desa</router-link>
+                        </b-dropdown-item>
+                        <b-dropdown-item>
+                            <router-link to="/tambahKecamatan">Tambah Kecamatan</router-link>
                         </b-dropdown-item>
                         <b-dropdown-item>
                             <router-link to="/admin/account">Daftar Akun</router-link>

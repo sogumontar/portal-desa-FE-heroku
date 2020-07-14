@@ -14,12 +14,14 @@
                         </b-col>
                         <b-col class="ml-3 m">
                             <h1>{{keranjang[1].nama}}</h1>
-                            <p style="font-size: 20px; margin-left: 2px">Harga : Rp. {{keranjang[1].harga*keranjang[0].jumlah | numFormat}}</p>
+                            <p style="font-size: 20px; margin-left: 2px">Harga (satuan) : Rp. {{keranjang[1].harga | numFormat}}</p>
+
                             <b-row class="ml-1">
                                 <h4><b-icon-dash-circle class="mt-1" @click="kurang_jumlah(index)"></b-icon-dash-circle><b-icon-dash></b-icon-dash></h4>
                                 <h5><p class="metric-tarif-jumlah">{{ keranjang[0].jumlah }}</p></h5>
                                 <h4><b-icon-dash></b-icon-dash><b-icon-plus-circle class="mt-1" @click="tambah_jumlah(index)"></b-icon-plus-circle></h4>
                             </b-row>
+                            <p style="font-size: 20px; margin-left: 2px">Total : Rp. {{keranjang[1].harga*keranjang[0].jumlah | numFormat}}</p>
                             <b-button variant="danger" size="sm"><b-icon-trash></b-icon-trash> Hapus</b-button>
                             <br><br>
                             <br><br>

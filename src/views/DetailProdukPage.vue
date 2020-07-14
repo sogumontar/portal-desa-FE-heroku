@@ -19,6 +19,8 @@
                         <p>Nama Produk : {{produk.nama}}</p>
                         <p>Harga : Rp. {{produk.harga | numFormat}}</p>
                         <p>Deskripsi : <br>{{produk.deskripsi}}</p>
+                        <h5 v-if="produk.jumlahPembelian != null">Total Pembelian: {{ produk.jumlahPembelian  }}</h5>
+                        <h5 v-else>Total Pembelian: 0</h5>
                         <p>Desa : <br>{{desa.nama}}</p>
                         <p>Kecamatan : <br>{{desa.kec}}</p>
                     </b-col>

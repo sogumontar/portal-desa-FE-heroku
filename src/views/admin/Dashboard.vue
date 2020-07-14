@@ -1,10 +1,10 @@
 <template>
     <div class="container-fluid">
         <br>
-        <h3>Daftar Pesanan </h3>
+        <h1 style="font-family: 'Arial Black'; text-align: left">Daftar Pesanan </h1>
         <hr>
         <div>
-            <b-card body-class="text-center" header-tag="nav">
+            <b-card      header-tag="nav">
                 <template v-slot:header>
                     <b-nav card-header tabs>
                         <b-nav-item v-bind:active="tab === 1" v-on:click="tab1">Pesanan Produk</b-nav-item>

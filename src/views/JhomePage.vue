@@ -8,11 +8,36 @@
             </b-col>
         </b-row>
         <hr>
-        <b-row class="justify-content-lg-center m-5">
-            <b-col cols="12" col lg="6" sm="12">
-                <input class="form-control" type="text" v-model="searchQuery" placeholder="Cari Kecamatan" />
+        <b-row class="mt-4 justify-content-lg-center justify-content-md-center justify-content-sm-center justify-content-xs-center">
+            <b-col cols="12" col lg="7" md="10" sm="12">
+                <b-navbar class="nav-search bg-color-primary text-white">
+                    <b-navbar-nav class="d-flex align-center w-100">
+                        <b-nav-item class="icon p-0 m-0">
+                            <p class="font-size-24 m-0 text-white">
+                                <b-icon icon="arrow-left-short" class="mr-3"/>
+                            </p>
+                        </b-nav-item>
+                        <b-nav-form class="w-100 pr-3">
+                            <b-input-group class="w-100 border-circle">
+                                <b-input-group-prepend is-text>
+                                    <b-icon icon="search"></b-icon>
+                                </b-input-group-prepend>
+                                <b-form-input
+                                        class="form-control"
+                                        id="input-search"
+                                        v-model="searchQuery"
+                                        type="search"
+                                        required
+                                        placeholder="Cari Kecamatan"
+                                        style="width: 550px;"
+                                ></b-form-input>
+                            </b-input-group>
+                        </b-nav-form>
+                    </b-navbar-nav>
+                </b-navbar>
             </b-col>
         </b-row>
+        <br><br>
         <div v-if="kecamatan.length!=0">
             <b-row class="">
                     <b-col cols="12" col lg="4" sm="12" md="6" class="p-4" v-for="item in filteredResources.slice(batasbawah, batasatas)" :key="item.sku">
@@ -20,7 +45,14 @@
                         <b-img rounded=""
                                :src="'https://portal-desa.herokuapp.com/kecamatan/get/'+item.nama+'.jpg'"
                                width="300px" style="height: 200px"></b-img>
+                        <div v-if="role === 'ROLE_ADMIN'">
+                            <br><br>
+                            <b-btn variant="danger" @click="deleteBySku(item.sku)">
+                                Delete
+                            </b-btn>
+                        </div>
                     </b-col>
+
             </b-row>
         </div>
         <div v-else>
@@ -123,6 +155,7 @@
                 val:1,
                 popular :[],
                 searchQuery:'',
+                role: localStorage.getItem("role")
             }
         },
         async mounted() {
@@ -139,6 +172,13 @@
                 const response = await axios.get('https://portal-desa.herokuapp.com/produk/popular/')
                 this.popular = response.data
                 console.log(this.popular)
+            },
+            async deleteBySku(sku){
+              await axios.get('http://localhost:9000/kecamatan/deleteBySku'+ sku)
+                  .then((response)=>{
+                  console.log(response);
+                  alert("Delete Kecamatan Sukses!")
+              })
             },
             tambah (current){
                 console.log(current)

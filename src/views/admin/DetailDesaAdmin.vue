@@ -1,6 +1,7 @@
 <template>
-    <div>
-        <h3>Desa {{value}}</h3>
+    <b-container>
+        <h1 class="judul mt-3">{{ value }}</h1>
+        <hr>
         <div>
             <b-row class="p-2 pb-4">
                 <b-col cols="12" col lg="6" sm="12" md="6">
@@ -9,6 +10,11 @@
                            fluid></b-img>
                 </b-col>
                 <b-col>
+                    <b-row>
+                        <b-col>
+
+                        </b-col>
+                    </b-row>
                     <table id="table">
                         <tr>
                             <td>Nama Desa</td>
@@ -56,7 +62,7 @@
             <h3>Daftar Penginapan Desa {{value}}</h3>
         </div>
         <hr>
-    </div>
+    </b-container>
 </template>
 
 <script>
@@ -98,5 +104,8 @@
 </script>
 
 <style scoped>
-
+    .judul {
+        text-align: left;
+        font-family: "Arial Black";
+    }
 </style>
